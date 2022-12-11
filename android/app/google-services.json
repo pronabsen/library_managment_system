@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "564078961802",
+    "project_id": "library-management-aaa31",
+    "storage_bucket": "library-management-aaa31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564078961802:android:5dcb4dd7c51ec47f6c7973",
+        "android_client_info": {
+          "package_name": "com.pronab.librarymanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564078961802-jdfd70p69jlg0onuppssdkd44a7nj08u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYot7mblxh1xv0hoWBbsZMoazewXFPwzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564078961802-jdfd70p69jlg0onuppssdkd44a7nj08u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
