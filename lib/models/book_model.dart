@@ -14,7 +14,6 @@ const String tblBookDescription = 'descriptions';
 const String tblBookBorrower = 'borrower';
 
 class BookModel {
-
   final String bookCode;
 
   final String bookName;
@@ -29,24 +28,22 @@ class BookModel {
   final int bookHired;
   Map borrower = {};
 
-  BookModel({
-    required this.bookCode,
-
-    required this.bookName,
-    required this.bookAuthor,
-    required this.categories,
-    required this.publication,
-    required this.publishedDate,
-    required this.language,
-    required this.bookImage,
-    required this.bookDescription,
-    required this.bookItem,
-    this.bookHired = 0,
-    required this.borrower
-  });
+  BookModel(
+      {required this.bookCode,
+      required this.bookName,
+      required this.bookAuthor,
+      required this.categories,
+      required this.publication,
+      required this.publishedDate,
+      required this.language,
+      required this.bookImage,
+      required this.bookDescription,
+      required this.bookItem,
+      this.bookHired = 0,
+      required this.borrower});
 
   Map<String, dynamic> toMap() {
-    final map = <String,dynamic>{
+    final map = <String, dynamic>{
       tblBookCode: bookCode,
       tblBookName: bookName,
       tblBookAuthor: bookAuthor,
@@ -58,7 +55,7 @@ class BookModel {
       tblBookItem: bookItem,
       tblBookHired: bookHired,
       tblBookDescription: bookDescription,
-      tblBookBorrower : borrower,
+      tblBookBorrower: borrower,
     };
     return map;
   }
@@ -75,8 +72,7 @@ class BookModel {
         bookItem = doc.data()![tblBookItem],
         bookHired = doc.data()![tblBookHired],
         bookDescription = doc.data()![tblBookDescription],
-        borrower = doc.data()![tblBookBorrower]
-  ;
+        borrower = doc.data()![tblBookBorrower];
 
   BookModel.fromMap(Map<String, dynamic>? doc)
       : bookCode = doc![tblBookCode],
@@ -90,8 +86,5 @@ class BookModel {
         bookItem = doc[tblBookItem],
         bookHired = doc[tblBookHired],
         bookDescription = doc[tblBookDescription],
-        borrower = doc[tblBookBorrower]
-  ;
-
-
+        borrower = doc[tblBookBorrower];
 }

@@ -19,7 +19,6 @@ class RegistrationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: careaAppBarWidget(context),
@@ -52,7 +51,6 @@ class RegistrationView extends StatelessWidget {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () async {
-
                       if (formRegKey.currentState!.validate()) {
                         await authController.registerCTR();
                       } else {
@@ -64,10 +62,12 @@ class RegistrationView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
                       decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: const BorderRadius.all(Radius.circular(45)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(45)),
                         backgroundColor: appSecBackGroundColor,
                       ),
-                      child: Text('Sign Up', style: boldTextStyle(color: white)),
+                      child:
+                          Text('Sign Up', style: boldTextStyle(color: white)),
                     ),
                   ),
                   //Divider
@@ -98,7 +98,7 @@ class RegistrationView extends StatelessWidget {
     );
   }
 
-  _name(BuildContext context){
+  _name(BuildContext context) {
     return TextFormField(
       autofocus: false,
       validator: (value) {
@@ -113,10 +113,12 @@ class RegistrationView extends StatelessWidget {
         // FocusScope.of(context).requestFocus(focusEmail);
       },
       controller: authController.regNameCTR,
-      decoration: inputDecoration(context, prefixIcon: Icons.person, hintText: "Full Name"),
+      decoration: inputDecoration(context,
+          prefixIcon: Icons.person, hintText: "Full Name"),
     );
   }
-  _rollNo(BuildContext context){
+
+  _rollNo(BuildContext context) {
     return TextFormField(
       autofocus: false,
       validator: (value) {
@@ -127,15 +129,16 @@ class RegistrationView extends StatelessWidget {
       },
       keyboardType: TextInputType.number,
       onFieldSubmitted: (v) {
-       // authController.focusEmail.unfocus();
+        // authController.focusEmail.unfocus();
         // FocusScope.of(context).requestFocus(focusEmail);
       },
       controller: authController.userRollCTR,
-      decoration: inputDecoration(context, prefixIcon: Icons.pin, hintText: "Roll No"),
+      decoration:
+          inputDecoration(context, prefixIcon: Icons.pin, hintText: "Roll No"),
     );
   }
 
-  _email(BuildContext context){
+  _email(BuildContext context) {
     return TextFormField(
       autofocus: false,
       validator: (value) {
@@ -151,11 +154,12 @@ class RegistrationView extends StatelessWidget {
         FocusScope.of(context).requestFocus(authController.focusPassword);
       },
       controller: authController.regEmailCTR,
-      decoration: inputDecoration(context, prefixIcon: Icons.mail_rounded, hintText: "Email"),
+      decoration: inputDecoration(context,
+          prefixIcon: Icons.mail_rounded, hintText: "Email"),
     );
   }
 
-  _dateOfBirth(BuildContext context){
+  _dateOfBirth(BuildContext context) {
     return TextFormField(
       autofocus: false,
       validator: (value) {
@@ -164,7 +168,7 @@ class RegistrationView extends StatelessWidget {
         }
         return null;
       },
-      onTap: () async{
+      onTap: () async {
         DateTime? pickedDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
@@ -173,21 +177,23 @@ class RegistrationView extends StatelessWidget {
             lastDate: DateTime.now());
 
         if (pickedDate != null) {
-          print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+          print(
+              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
           String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-          print(formattedDate); //formatted date output using intl package =>  2021-03-16
+          print(
+              formattedDate); //formatted date output using intl package =>  2021-03-16
 
           authController.birthDate.value = formattedDate;
           authController.birthDateCTR.text = formattedDate;
-
         } else {}
       },
       controller: authController.birthDateCTR,
-      decoration: inputDecoration(context, prefixIcon: Icons.date_range, hintText: "Date of Birth"),
+      decoration: inputDecoration(context,
+          prefixIcon: Icons.date_range, hintText: "Date of Birth"),
     );
   }
 
-  _gender(BuildContext context){
+  _gender(BuildContext context) {
     return Container(
       decoration: commonDecoration(color: Colors.grey[200]),
       child: Padding(
@@ -196,23 +202,25 @@ class RegistrationView extends StatelessWidget {
           children: <Widget>[
             const Expanded(
               flex: 2,
-              child: Text('Gender:', style: TextStyle(color: Colors.black),),
+              child: Text(
+                'Gender:',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             Expanded(
                 flex: 4,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: authController.selectedGender.value,
-                    items: <String>['Male', 'Female', 'Other'].map((String value) {
+                    items:
+                        <String>['Male', 'Female', 'Other'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
                     onChanged: (newValue) {
-
                       authController.selectedGender.value = newValue!;
-
                     },
                   ),
                 ))
@@ -222,8 +230,7 @@ class RegistrationView extends StatelessWidget {
     );
   }
 
-
-  _password(BuildContext context){
+  _password(BuildContext context) {
     return Column(
       children: [
         Observer(
@@ -232,7 +239,7 @@ class RegistrationView extends StatelessWidget {
             focusNode: authController.focusPassword,
             controller: authController.regPassCTR,
             obscureText: authController.isIconTrue.value,
-            validator: (value){
+            validator: (value) {
               if (value!.isEmpty) {
                 return "* Required";
               } else {
@@ -250,14 +257,18 @@ class RegistrationView extends StatelessWidget {
               prefixIcon: Icons.lock,
               hintText: "Password",
               suffixIcon: Theme(
-                data: ThemeData(splashColor: Colors.transparent, highlightColor: Colors.transparent),
+                data: ThemeData(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent),
                 child: IconButton(
                   highlightColor: Colors.transparent,
                   onPressed: () {
                     authController.isIconTrue.value = false;
                   },
                   icon: Icon(
-                    (authController.isIconTrue.isTrue) ? Icons.visibility_rounded : Icons.visibility_off,
+                    (authController.isIconTrue.isTrue)
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off,
                     size: 16,
                     color: appStore.isDarkModeOn ? white : gray,
                   ),
@@ -270,5 +281,4 @@ class RegistrationView extends StatelessWidget {
       ],
     );
   }
-
 }

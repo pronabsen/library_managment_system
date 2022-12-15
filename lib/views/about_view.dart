@@ -20,17 +20,13 @@ class AboutView extends StatelessWidget {
         Get.to(AdminHomeView());
         return false; //<-- SEE HERE
       },
-
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: customAppBarWidget(
-            context,
+        appBar: customAppBarWidget(context,
             backgroundColor: Colors.white,
             itemColor: Colors.black,
             titleText: 'About'),
-        body: Container(
-
-        ),
+        body: Container(),
       ),
     );
   }

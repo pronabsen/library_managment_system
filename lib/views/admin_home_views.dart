@@ -27,10 +27,8 @@ class AdminHomeView extends StatefulWidget {
 }
 
 class _AdminHomeViewState extends State<AdminHomeView> {
-
   int _currentIndex = 0;
   PageController _pageController = PageController();
-
 
   @override
   void initState() {
@@ -73,14 +71,15 @@ class _AdminHomeViewState extends State<AdminHomeView> {
                 )
               ]),
         ),
-
-        floatingActionButton: _currentIndex == 4 ? Container() :FloatingActionButton(
-          backgroundColor: Colors.blue,
-          child: const Icon(Icons.add_outlined),
-          onPressed: () {
-            Get.off(AddBookView());
-          },
-        ),
+        floatingActionButton: _currentIndex == 4
+            ? Container()
+            : FloatingActionButton(
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.add_outlined),
+                onPressed: () {
+                  Get.off(AddBookView());
+                },
+              ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: Colors.blue,
           selectedIndex: _currentIndex,
@@ -88,7 +87,8 @@ class _AdminHomeViewState extends State<AdminHomeView> {
           onItemSelected: (index) => setState(() {
             _currentIndex = index;
             _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 400), curve: Curves.ease);
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.ease);
           }),
           items: [
             BottomNavyBarItem(
@@ -99,25 +99,20 @@ class _AdminHomeViewState extends State<AdminHomeView> {
             BottomNavyBarItem(
                 icon: const Icon(Icons.library_books_outlined),
                 title: const AutoSizeText('Books List'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
             BottomNavyBarItem(
                 icon: const Icon(Icons.keyboard_command_key),
                 title: const AutoSizeText('Request List'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
             BottomNavyBarItem(
                 icon: const Icon(Icons.menu_book_outlined),
                 title: const AutoSizeText('Issued Books'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
             BottomNavyBarItem(
                 icon: const Icon(Icons.account_circle_outlined),
                 title: const AutoSizeText('Me'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
           ],
-        )
-    );
+        ));
   }
 }

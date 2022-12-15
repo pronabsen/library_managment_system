@@ -18,7 +18,6 @@ class FragIssuedBookList extends StatefulWidget {
 }
 
 class _FragIssuedBookListState extends State<FragIssuedBookList> {
-
   BookController bookController = Get.put(BookController());
   AuthController authController = Get.put(AuthController());
 
@@ -26,7 +25,8 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: bookController.getIssuedBook(),
-      builder: (BuildContext context, AsyncSnapshot<List<IssuedBookModel>> snapshot) {
+      builder: (BuildContext context,
+          AsyncSnapshot<List<IssuedBookModel>> snapshot) {
         print('_FragIssuedBookListState.build---> ${snapshot.data}');
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           return Container(
@@ -44,36 +44,42 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                   color: Colors.blue[100],
                   child: GestureDetector(
                     onTap: () {
-                           setState(() {
-                          showBottomSheet(
-                              context, snapshot.data![index]);
-                        });
+                      setState(() {
+                        showBottomSheet(context, snapshot.data![index]);
+                      });
                     },
                     child: ListTile(
-                      title: Text('${snapshot.data![index].bookName} (${snapshot.data![index].bookCode})',
+                      title: Text(
+                        '${snapshot.data![index].bookName} (${snapshot.data![index].bookCode})',
                         style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
-                              color: Color(0Xaa000839),
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w600,
-                            )),),
+                          color: Color(0Xaa000839),
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w600,
+                        )),
+                      ),
                       subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Text('Borrower: ${snapshot.data![index].borrower}'),
                           Text('Due Date: ${snapshot.data![index].dueDate}'),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                         ],
                       ),
-                      trailing: const Icon(Icons.arrow_circle_right_outlined, color: Color(0Xaa000839),),
-
+                      trailing: const Icon(
+                        Icons.arrow_circle_right_outlined,
+                        color: Color(0Xaa000839),
+                      ),
                     ),
                   ),
                 );
               },
-
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -82,7 +88,8 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                Align(alignment: AlignmentDirectional.center,
+                Align(
+                    alignment: AlignmentDirectional.center,
                     child: noAvailableData()),
               ],
             ),
@@ -91,28 +98,28 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
           return const Center(child: CircularProgressIndicator());
         }
       },
-
     );
   }
-  
- showBottomSheet(BuildContext context, IssuedBookModel issuedBookModel )  async {
 
+  showBottomSheet(BuildContext context, IssuedBookModel issuedBookModel) async {
     UserModel user = await authController.getUserInfo(issuedBookModel.borrower);
 
-    BookModel bookItem = await bookController.getBookByCode(issuedBookModel.bookCode);
-    bookController.isAvailable.value = !(bookItem.bookItem == bookItem.bookHired);
+    BookModel bookItem =
+        await bookController.getBookByCode(issuedBookModel.bookCode);
+    bookController.isAvailable.value =
+        !(bookItem.bookItem == bookItem.bookHired);
     print('_FragRequestBookListState.showBottomSheet--- ${user.userEmail}');
 
     return showModalBottomSheet(
         context: context,
         backgroundColor: Colors.blue,
         builder: (BuildContext context) {
-
-          return Obx((){
+          return Obx(() {
             return SingleChildScrollView(
               child: Container(
                 color: const Color(0Xff737373),
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -122,15 +129,15 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                       ),
                     ),
                     child: Padding(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40.0, vertical: 20.0),
                       child: Column(
                         children: [
                           Text(
                             'Issued for #${issuedBookModel.bookName} (${issuedBookModel.bookCode})',
                             style: GoogleFonts.montserrat(
                               textStyle: const TextStyle(
-                                color:  Colors.deepOrange,
+                                color: Colors.deepOrange,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 decorationThickness: 4.0,
@@ -258,7 +265,8 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                                     ),
                                     const SizedBox(height: 15.0),
                                     Text(
-                                      fineCalculator(issuedBookModel.dueDate).toString(),
+                                      fineCalculator(issuedBookModel.dueDate)
+                                          .toString(),
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.red,
@@ -273,68 +281,64 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                               ],
                             ),
                           ),
-
-                          authController.isAdmin.isFalse ?
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                                child: ElevatedButton(
-                                  onPressed: (){
-                                    setState(() {
-                                      bookController.showOtherOption.value = true;
-                                    });
-
-                                  },
-                                  child: Text(
-                                    'Delete',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        fontSize: 21,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
+                          authController.isAdmin.isFalse
+                              ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            bookController
+                                                .showOtherOption.value = true;
+                                          });
+                                        },
+                                        child: Text(
+                                          'Delete',
+                                          style: GoogleFonts.montserrat(
+                                            textStyle: const TextStyle(
+                                              fontSize: 21,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Cancel',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        fontSize: 21,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          'Cancel',
+                                          style: GoogleFonts.montserrat(
+                                            textStyle: const TextStyle(
+                                              fontSize: 21,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                              :
-                          Container()
-
+                                  ],
+                                )
+                              : Container()
                         ],
                       ),
                     )),
               ),
             );
           });
-        }
-
-    );
-
+        });
   }
 
   fineCalculator(String date) {
-    try{
+    try {
       var due = DateTime.parse(date);
       var cur = DateTime.now();
       var fine = cur.difference(due).inDays;
@@ -342,10 +346,10 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
         fine = 0;
       }
       return fine;
-
-    }catch(e){
-      Fluttertoast.showToast(msg: e.toString(),);
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
     }
   }
-  
 }

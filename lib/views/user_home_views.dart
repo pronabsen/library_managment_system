@@ -19,7 +19,6 @@ import 'frag_home/issued_book_list.dart';
 import 'frag_home/list_book_frag.dart';
 import 'frag_home/settings_frag.dart';
 
-
 class UserHomeView extends StatefulWidget {
   const UserHomeView({Key? key}) : super(key: key);
 
@@ -28,8 +27,6 @@ class UserHomeView extends StatefulWidget {
 }
 
 class _UserHomeViewState extends State<UserHomeView> {
-
-
   int _currentIndex = 0;
   PageController _pageController = PageController();
 
@@ -44,7 +41,6 @@ class _UserHomeViewState extends State<UserHomeView> {
     _pageController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +62,15 @@ class _UserHomeViewState extends State<UserHomeView> {
                 )
               ]),
         ),
-
-        floatingActionButton: _currentIndex == 4 ? Container() :FloatingActionButton(
-          backgroundColor: Colors.blue,
-          child: const Icon(Icons.add_outlined),
-          onPressed: () {
-            Get.off(AddBookView());
-          },
-        ),
+        floatingActionButton: _currentIndex == 4
+            ? Container()
+            : FloatingActionButton(
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.add_outlined),
+                onPressed: () {
+                  Get.off(AddBookView());
+                },
+              ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: Colors.blue,
           selectedIndex: _currentIndex,
@@ -81,22 +78,19 @@ class _UserHomeViewState extends State<UserHomeView> {
           onItemSelected: (index) => setState(() {
             _currentIndex = index;
             _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 400), curve: Curves.ease);
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.ease);
           }),
           items: [
-
             BottomNavyBarItem(
                 icon: const Icon(Icons.library_books_outlined),
                 title: const AutoSizeText('Books List'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
             BottomNavyBarItem(
                 icon: const Icon(Icons.account_circle_outlined),
                 title: const AutoSizeText('Me'),
-                activeColor: Colors.white
-            ),
+                activeColor: Colors.white),
           ],
-        )
-    );
+        ));
   }
 }

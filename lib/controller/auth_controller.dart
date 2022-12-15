@@ -12,13 +12,9 @@ import '../models/UserModel.dart';
 import '../views/admin_home_views.dart';
 import '../views/user_home_views.dart';
 
-
 class AuthController extends GetxController {
-
   AuthDatabase authDatabase = AuthDatabase();
   AuthService authService = AuthService();
-
-
 
   final isLoading = false.obs;
   final isAdmin = false.obs;
@@ -26,59 +22,57 @@ class AuthController extends GetxController {
   //Login
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  final passwordController  = TextEditingController();
+  final passwordController = TextEditingController();
   final isIconTrue = false.obs;
   final isChecked = false.obs;
   final checkBoxValue = false.obs;
 //  final f1 = FocusNode();
- // final f2 = FocusNode();
+  // final f2 = FocusNode();
 
   final userName = ''.obs;
   final userEmail = ''.obs;
   final userImage = ''.obs;
 
-
-
-  loginCTR(){
-
+  loginCTR() {
     //Get.to(()=> AddBook());
 
-
-    EasyLoading.show(maskType: EasyLoadingMaskType.black,);
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
     isLoading.value = true;
 
-    authService.loginWithEmailAndPassword(emailController.text, passwordController.text)
+    authService
+        .loginWithEmailAndPassword(
+            emailController.text, passwordController.text)
         .then((value) async {
+      if (value != null) {
+        final querySnapshot =
+            await authDatabase.getUserInfo(emailController.text);
+        isAdmin.value = querySnapshot.admin;
+        SPHelper.saveUserLoggedInSharedPreference(true);
+        SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
+        SPHelper.saveUserEmailSharedPreference(querySnapshot.userEmail);
+        SPHelper.saveUserIsAdminSharedPreference(querySnapshot.admin);
+        EasyLoading.dismiss();
+        toast('Welcome Back! ${querySnapshot.userName}');
+        isLoading.value = false;
 
-          if(value != null){
-            final querySnapshot = await authDatabase.getUserInfo(emailController.text);
-            isAdmin.value = querySnapshot.admin;
-            SPHelper.saveUserLoggedInSharedPreference(true);
-            SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
-            SPHelper.saveUserEmailSharedPreference(querySnapshot.userEmail);
-            SPHelper.saveUserIsAdminSharedPreference(querySnapshot.admin);
-            EasyLoading.dismiss();
-            toast('Welcome Back! ${querySnapshot.userName}');
-            isLoading.value = false;
+        //   Get.to(Home());
 
-         //   Get.to(Home());
-
-            if(querySnapshot.admin){
-              Get.offAll(()=> const AdminHomeView());
-            } else {
-              Get.offAll(()=> const UserHomeView());
-            }
-            _clearController();
+        if (querySnapshot.admin) {
+          Get.offAll(() => const AdminHomeView());
         } else {
-            EasyLoading.dismiss();
-            isLoading.value = false;
-            toast('There is no user record corresponding to this identifier. The user may have been deleted');
-
-          }
+          Get.offAll(() => const UserHomeView());
+        }
+        _clearController();
+      } else {
+        EasyLoading.dismiss();
+        isLoading.value = false;
+        toast(
+            'There is no user record corresponding to this identifier. The user may have been deleted');
+      }
     });
-
   }
-
 
   //Registration
   final formRegKey = GlobalKey<FormState>();
@@ -88,20 +82,21 @@ class AuthController extends GetxController {
   final birthDateCTR = TextEditingController();
   final userRollCTR = TextEditingController();
 
-
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
   final selectedGender = 'Male'.obs;
   final value = ''.obs;
   final birthDate = ''.obs;
 
-
   registerCTR() async {
-    EasyLoading.show(maskType: EasyLoadingMaskType.black,);
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
     isLoading.value = true;
-    authService.registerWithEmailAndPassword(regEmailCTR.text, regPassCTR.text)
+    authService
+        .registerWithEmailAndPassword(regEmailCTR.text, regPassCTR.text)
         .then((result) {
-      if(result != null){
+      if (result != null) {
         final newUser = UserModel(
             userName: regNameCTR.text,
             userImage: 'null',
@@ -111,8 +106,7 @@ class AuthController extends GetxController {
             admin: false,
             userRoll: userRollCTR.text,
             issuedBooks: {},
-            applied: {}
-        );
+            applied: {});
         authDatabase.addUserInfo(newUser);
         isLoading.value = false;
         SPHelper.saveUserLoggedInSharedPreference(true);
@@ -120,9 +114,9 @@ class AuthController extends GetxController {
         SPHelper.saveUserEmailSharedPreference(regEmailCTR.text);
         EasyLoading.dismiss();
 
-        Fluttertoast.showToast(msg: 'Welcome! Your account created successfully.');
-      //  Get.to(Home());
-
+        Fluttertoast.showToast(
+            msg: 'Welcome! Your account created successfully.');
+        //  Get.to(Home());
 
         //_clearController();
 
@@ -143,7 +137,6 @@ class AuthController extends GetxController {
 
     selectedGender.value = 'Male';
     birthDate.value = '';
-
   }
 
   getUserInfo(String email) async {
@@ -151,23 +144,17 @@ class AuthController extends GetxController {
     return querySnapshot;
   }
 
-
   @override
   void onClose() {
-
     print('AuthController.onClose');
     super.onClose();
- //   Get.delete<AuthController>();
+    //   Get.delete<AuthController>();
   }
-
 
   @override
   void dispose() {
-
     print('AuthController.dispose');
     super.dispose();
     Get.delete<AuthController>();
   }
-
-
 }

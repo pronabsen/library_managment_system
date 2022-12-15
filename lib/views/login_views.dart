@@ -11,19 +11,15 @@ import '../utils/widgets.dart';
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
 
-
   AuthController authController = Get.put(AuthController());
   final formKey = AuthController().formKey;
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: careaAppBarWidget(context),
-      body: Obx((){
+      body: Obx(() {
         return Center(
           child: Container(
             padding: const EdgeInsets.all(16),
@@ -34,7 +30,11 @@ class LoginView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(height: 130, width: 130, fit: BoxFit.fitWidth, image: AssetImage('assets/app_icon.png')),
+                  const Image(
+                      height: 130,
+                      width: 130,
+                      fit: BoxFit.fitWidth,
+                      image: AssetImage('assets/app_icon.png')),
                   Text('Login to Your Account', style: boldTextStyle(size: 24)),
                   const SizedBox(height: 30),
                   TextFormField(
@@ -49,10 +49,12 @@ class LoginView extends StatelessWidget {
                     autofillHints: const [AutofillHints.email],
                     onFieldSubmitted: (v) {
                       authController.focusEmail.unfocus();
-                      FocusScope.of(context).requestFocus(authController.focusPassword);
+                      FocusScope.of(context)
+                          .requestFocus(authController.focusPassword);
                     },
                     controller: authController.emailController,
-                    decoration: inputDecoration(context, prefixIcon: Icons.mail_rounded, hintText: "Email"),
+                    decoration: inputDecoration(context,
+                        prefixIcon: Icons.mail_rounded, hintText: "Email"),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -60,7 +62,7 @@ class LoginView extends StatelessWidget {
                     obscureText: authController.isIconTrue.value,
                     //   autofocus: false,
                     //   focusNode: authController.focusPassword,
-                    validator: (value){
+                    validator: (value) {
                       if (value!.isEmpty) {
                         return "* Required";
                       } else {
@@ -72,14 +74,18 @@ class LoginView extends StatelessWidget {
                       prefixIcon: Icons.lock,
                       hintText: "Password",
                       suffixIcon: Theme(
-                        data: ThemeData(splashColor: Colors.transparent, highlightColor: Colors.transparent),
+                        data: ThemeData(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent),
                         child: IconButton(
                           highlightColor: Colors.transparent,
                           onPressed: () {
                             authController.isIconTrue.value = false;
                           },
                           icon: Icon(
-                            (authController.isIconTrue.isTrue) ? Icons.visibility_rounded : Icons.visibility_off,
+                            (authController.isIconTrue.isTrue)
+                                ? Icons.visibility_rounded
+                                : Icons.visibility_off,
                             size: 16,
                             color: gray,
                           ),
@@ -89,7 +95,9 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Theme(
-                    data: ThemeData(unselectedWidgetColor: appStore.isDarkModeOn ? Colors.white : black),
+                    data: ThemeData(
+                        unselectedWidgetColor:
+                            appStore.isDarkModeOn ? Colors.white : black),
                     child: CheckboxListTile(
                       contentPadding: const EdgeInsets.all(0),
                       title: Text("Remember Me", style: primaryTextStyle()),
@@ -103,13 +111,12 @@ class LoginView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-                    //  authController.loginCTR();
+                      //  authController.loginCTR();
                       if (formKey.currentState!.validate()) {
-                           authController.loginCTR();
+                        authController.loginCTR();
                       } else {
                         Fluttertoast.showToast(msg: 'Field can\'t be empty');
                       }
-
 
                       // if (authController.formKey.currentState!.validate()) {
                       //
@@ -166,7 +173,8 @@ class LoginView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
                       decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: const BorderRadius.all(Radius.circular(45)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(45)),
                         backgroundColor: appSecBackGroundColor,
                       ),
                       child: Text('Login', style: boldTextStyle(color: white)),
@@ -177,10 +185,10 @@ class LoginView extends StatelessWidget {
                     onPressed: () {
                       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ForgotPassScreen()));
                     },
-                    child: Text('Forgot the password ?', style: boldTextStyle()),
+                    child:
+                        Text('Forgot the password ?', style: boldTextStyle()),
                   ),
                   const SizedBox(height: 8),
-
                   TextButton(
                     onPressed: () {
                       //   Get.to.
@@ -192,7 +200,9 @@ class LoginView extends StatelessWidget {
                         text: "Don't have an account? ",
                         style: secondaryTextStyle(),
                         children: [
-                          TextSpan(text: ' Create New', style: boldTextStyle(size: 14)),
+                          TextSpan(
+                              text: ' Create New',
+                              style: boldTextStyle(size: 14)),
                         ],
                       ),
                     ),

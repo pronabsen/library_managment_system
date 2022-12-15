@@ -13,7 +13,8 @@ import '../devops_view.dart';
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
 
-  ProfileSettingsController profileSettingsController = Get.put(ProfileSettingsController());
+  ProfileSettingsController profileSettingsController =
+      Get.put(ProfileSettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,6 @@ class SettingsPage extends StatelessWidget {
                       icon: CupertinoIcons.lock_shield),
                 ],
               ),
-
               _SingleSection(
                 title: "Others",
                 children: [
@@ -121,7 +121,6 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
 
 class _CustomListTile extends StatelessWidget {
   final String title;

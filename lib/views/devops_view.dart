@@ -18,12 +18,11 @@ class DeveloperTeamView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         Get.to(AdminHomeView());
-         return false; //<-- SEE HERE
+        return false; //<-- SEE HERE
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: customAppBarWidget(
-            context,
+        appBar: customAppBarWidget(context,
             backgroundColor: Colors.white,
             itemColor: Colors.black,
             titleText: 'Developer & Team'),
@@ -35,10 +34,20 @@ class DeveloperTeamView extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    SizedBox(height: 5,),
-                    Text('Developer',style: montserratTextStyle(fontSize: 20, color: Colors.orange),),
-                    SizedBox(height: 10,),
-                    Divider(thickness: 1,),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Developer',
+                      style: montserratTextStyle(
+                          fontSize: 20, color: Colors.orange),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      thickness: 1,
+                    ),
                     Container(
                       height: 180,
                       width: MediaQuery.of(context).size.width,
@@ -79,31 +88,54 @@ class DeveloperTeamView extends StatelessWidget {
                                 'pronabsen18@gmail.com',
                                 style: montserratTextStyle(fontSize: 13),
                               ),
-                              SizedBox(height: 14,),
+                              SizedBox(
+                                height: 14,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/mail.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/mail.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
                                       launchWeb('mailto:pronabsen18@gmail.com');
                                     },
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/github.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/github.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
                                       launchWeb('https://github.com/pronabsen');
                                     },
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/facebook.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/profile.php?id=100007250821251');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/facebook.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/profile.php?id=100007250821251');
                                     },
                                   ),
                                 ],
@@ -113,11 +145,20 @@ class DeveloperTeamView extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    SizedBox(height: 20,),
-                    Text('Team Member',style: montserratTextStyle(fontSize: 20,color: Colors.blue),),
-                    SizedBox(height: 10,),
-                    Divider(thickness: 1,),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Team Member',
+                      style:
+                          montserratTextStyle(fontSize: 20, color: Colors.blue),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      thickness: 1,
+                    ),
                     Container(
                       height: 140,
                       width: MediaQuery.of(context).size.width,
@@ -141,23 +182,39 @@ class DeveloperTeamView extends StatelessWidget {
                                 'shuvodhali64@gmail.com',
                                 style: montserratTextStyle(fontSize: 13),
                               ),
-                              SizedBox(height: 14,),
+                              SizedBox(
+                                height: 14,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/mail.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/mail.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
                                       launchMail('shuvodhali64@gmail.com');
                                     },
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/facebook.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/profile.php?id=100011112939392');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/facebook.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/profile.php?id=100011112939392');
                                     },
                                   ),
                                 ],
@@ -177,15 +234,17 @@ class DeveloperTeamView extends StatelessWidget {
                                     color: const Color(0xFF90CAF9), width: 3),
                                 image: const DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage('assets/images/team/Vaskar Dhali.jpg')),
+                                    image: AssetImage(
+                                        'assets/images/team/Vaskar Dhali.jpg')),
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
-                    Divider(thickness: 1,),
+                    Divider(
+                      thickness: 1,
+                    ),
                     Container(
                       height: 140,
                       width: MediaQuery.of(context).size.width,
@@ -206,7 +265,8 @@ class DeveloperTeamView extends StatelessWidget {
                                     color: const Color(0xFF90CAF9), width: 3),
                                 image: const DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage('assets/images/team/Apurbo.jpg')),
+                                    image: AssetImage(
+                                        'assets/images/team/Apurbo.jpg')),
                               ),
                             ),
                           ),
@@ -226,35 +286,52 @@ class DeveloperTeamView extends StatelessWidget {
                                 'apurbabiswas@gmail.com',
                                 style: montserratTextStyle(fontSize: 13),
                               ),
-                              SizedBox(height: 14,),
+                              SizedBox(
+                                height: 14,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/mail.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/iamshuvodhali');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/mail.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/iamshuvodhali');
                                     },
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/facebook.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/profile.php?id=100015580339071');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/facebook.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/profile.php?id=100015580339071');
                                     },
                                   ),
                                 ],
                               ),
                             ],
                           )
-
-
                         ],
                       ),
                     ),
-                    Divider(thickness: 1,),
+                    Divider(
+                      thickness: 1,
+                    ),
                     Container(
                       height: 140,
                       width: MediaQuery.of(context).size.width,
@@ -278,23 +355,40 @@ class DeveloperTeamView extends StatelessWidget {
                                 'tohidurrifat@gmail.com',
                                 style: montserratTextStyle(fontSize: 13),
                               ),
-                              SizedBox(height: 14,),
+                              SizedBox(
+                                height: 14,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/mail.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/profile.php?id=100015055260838');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/mail.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/profile.php?id=100015055260838');
                                     },
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   GestureDetector(
-                                    child: const Image(image: AssetImage('assets/other/facebook.png',),
-                                      height: 32.0, width: 32.0,),
-                                    onTap: (){
-                                      launchWeb('https://www.facebook.com/profile.php?id=100015055260838');
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/other/facebook.png',
+                                      ),
+                                      height: 32.0,
+                                      width: 32.0,
+                                    ),
+                                    onTap: () {
+                                      launchWeb(
+                                          'https://www.facebook.com/profile.php?id=100015055260838');
                                     },
                                   ),
                                 ],
@@ -314,16 +408,17 @@ class DeveloperTeamView extends StatelessWidget {
                                     color: const Color(0xFF90CAF9), width: 3),
                                 image: const DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage('assets/images/team/Rifat.jpg')),
+                                    image: AssetImage(
+                                        'assets/images/team/Rifat.jpg')),
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
-                    Divider(thickness: 1,),
-
+                    Divider(
+                      thickness: 1,
+                    ),
                     Text(
                       'Team Members helped to complete this project!\nThanks to all Team Members',
                       textAlign: TextAlign.center,
@@ -347,9 +442,8 @@ class DeveloperTeamView extends StatelessWidget {
 }
 
 Future<void> launchWeb(String url) async {
-
   final Uri launch = Uri.parse(url);
-  if (await canLaunchUrl(launch)){
+  if (await canLaunchUrl(launch)) {
     await launchUrl(launch, mode: LaunchMode.externalApplication);
   } else {
     // can't launch url
@@ -357,12 +451,8 @@ Future<void> launchWeb(String url) async {
 }
 
 Future<void> launchMail(String mail) async {
-  final Uri params = Uri(
-    scheme: 'mailto',
-    path: mail,
-    query: 'subject=Hello!'
-  );
-  if (await canLaunchUrl(params)){
+  final Uri params = Uri(scheme: 'mailto', path: mail, query: 'subject=Hello!');
+  if (await canLaunchUrl(params)) {
     await launchUrl(params, mode: LaunchMode.externalApplication);
   } else {
     // can't launch url

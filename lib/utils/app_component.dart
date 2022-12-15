@@ -27,7 +27,8 @@ ButtonStyle ElevatedButtonStyle1 = ButtonStyle(
   side: const MaterialStatePropertyAll(BorderSide(color: Colors.black54)),
   backgroundColor: const MaterialStatePropertyAll(Colors.white),
   foregroundColor: const MaterialStatePropertyAll(Colors.black),
-  shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(45))),
+  shape: MaterialStatePropertyAll(
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(45))),
 );
 
 DotDecoration LightActiveDecoration = DotDecoration(
@@ -36,4 +37,5 @@ DotDecoration LightActiveDecoration = DotDecoration(
   width: 20,
 );
 
-DotDecoration LightDecoration = DotDecoration(color: Colors.grey.shade400, borderRadius: BorderRadius.circular(20));
+DotDecoration LightDecoration = DotDecoration(
+    color: Colors.grey.shade400, borderRadius: BorderRadius.circular(20));

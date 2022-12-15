@@ -190,8 +190,7 @@ class AddBookView extends StatelessWidget {
                                 child: DropdownButton<String>(
                                   value: bookController.bookLanguage.value,
                                   items: AppConstants.bookLanguage
-                                      .map((e) =>
-                                      DropdownMenuItem(
+                                      .map((e) => DropdownMenuItem(
                                           value: e, child: Text(e!)))
                                       .toList(),
                                   onChanged: (newValue) {
@@ -226,8 +225,7 @@ class AddBookView extends StatelessWidget {
                                 child: DropdownButton<String>(
                                   value: bookController.selectedCategory.value,
                                   items: AppConstants.bookTypes
-                                      .map((e) =>
-                                      DropdownMenuItem(
+                                      .map((e) => DropdownMenuItem(
                                           value: e, child: Text(e!)))
                                       .toList(),
                                   onChanged: (newValue) {
@@ -266,8 +264,9 @@ class AddBookView extends StatelessWidget {
                           if (pickedDate != null) {
                             print(
                                 pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate = DateFormat(
-                                AppConstants.datePattern).format(pickedDate);
+                            String formattedDate =
+                                DateFormat(AppConstants.datePattern)
+                                    .format(pickedDate);
                             print(
                                 formattedDate); //formatted date output using intl package =>  2021-03-16
 
@@ -341,23 +340,18 @@ class AddBookView extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 GestureDetector(
                   onTap: () async {
-
                     if (bookController.bookImage.value.isEmpty) {
-                      toast( 'Please select an Image');
+                      toast('Please select an Image');
                       return;
                     }
 
                     if (bookController.fromKey.currentState!.validate()) {
-
                       final result = await bookController.addNewBook();
-
-                    } else{
+                    } else {
                       print('error');
                     }
-
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -366,10 +360,12 @@ class AddBookView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
                       decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: const BorderRadius.all(Radius.circular(45)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(45)),
                         backgroundColor: appSecBackGroundColor,
                       ),
-                      child: Text('Add New Book', style: boldTextStyle(color: white)),
+                      child: Text('Add New Book',
+                          style: boldTextStyle(color: white)),
                     ),
                   ),
                 ),
@@ -379,20 +375,22 @@ class AddBookView extends StatelessWidget {
         }));
   }
 
-  bookImage(){
-    if(bookController.bookImage.value.isEmpty){
+  bookImage() {
+    if (bookController.bookImage.value.isEmpty) {
       return const SizedBox();
     } else {
       return Row(
         children: [
-          const SizedBox(width: 30,),
+          const SizedBox(
+            width: 30,
+          ),
           Container(
             width: 120,
             height: 120,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  fit: BoxFit.cover, image: FileImage(File(bookController.bookImage.value))
-              ),
+                  fit: BoxFit.cover,
+                  image: FileImage(File(bookController.bookImage.value))),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               color: Colors.redAccent,
             ),
@@ -400,7 +398,6 @@ class AddBookView extends StatelessWidget {
         ],
       );
     }
-
   }
 
   selectBookImage(BuildContext context) {
@@ -411,10 +408,7 @@ class AddBookView extends StatelessWidget {
           return Container(
             color: Colors.blue,
             width: double.infinity,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 2 * 0.3,
+            height: MediaQuery.of(context).size.height / 2 * 0.3,
             margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Column(
               children: [

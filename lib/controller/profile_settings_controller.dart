@@ -8,18 +8,15 @@ import '../database/auth_db.dart';
 import '../functions/shared_pref_helper.dart';
 
 class ProfileSettingsController extends GetxController {
-
-
   AuthDatabase authDatabase = AuthDatabase();
   AuthService authService = AuthService();
-
 
   final userName = ''.obs;
   final userEmail = ''.obs;
   final userImage = ''.obs;
   final isAdmin = false.obs;
 
-  UserModel ? userModel;
+  UserModel? userModel;
 
   @override
   void onReady() {
@@ -39,21 +36,21 @@ class ProfileSettingsController extends GetxController {
     super.onInit();
   }
 
-
   loadData() async {
-
-    final querySnapshot = await authDatabase.getUserInfo(await SPHelper.getUserEmailSharedPreference());
+    final querySnapshot = await authDatabase
+        .getUserInfo(await SPHelper.getUserEmailSharedPreference());
 
     userName.value = querySnapshot.userName;
     userEmail.value = querySnapshot.userEmail;
     userImage.value = querySnapshot.userImage;
     isAdmin.value = querySnapshot.admin;
 
-    userModel =  UserModel.fromMap(querySnapshot.toMap());
+    userModel = UserModel.fromMap(querySnapshot.toMap());
     print('ProfileSettingsController.loadData----> ${userImage.value}');
 
     return querySnapshot;
   }
+
   logout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     authService.signOut();
@@ -61,7 +58,5 @@ class ProfileSettingsController extends GetxController {
 
     Get.offAll(() => LoginView());
     Get.deleteAll();
-
   }
-
 }

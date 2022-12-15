@@ -16,9 +16,8 @@ import '../functions/app_constants.dart';
 import '../models/application_model.dart';
 import '../models/book_model.dart';
 
-class BookController extends GetxController{
-
- // BookServices bookServices = BookServices();
+class BookController extends GetxController {
+  // BookServices bookServices = BookServices();
   BookDatabase bookDatabase = BookDatabase();
   AuthDatabase authDatabase = AuthDatabase();
   final firebaseStorage = FirebaseStorage.instance;
@@ -48,15 +47,14 @@ class BookController extends GetxController{
   final isAvailable = true.obs;
   final isReload = false.obs;
 
-
   @override
-  onInit(){
+  onInit() {
     super.onInit();
   }
 
   getImage(BuildContext context, ImageSource imageSource) async {
     final pickedImage = await ImagePicker().pickImage(source: imageSource);
-    if(pickedImage != null){
+    if (pickedImage != null) {
       bookImage.value = pickedImage.path;
       bookImageName.value = pickedImage.name;
 
@@ -67,13 +65,16 @@ class BookController extends GetxController{
   }
 
   addNewBook() async {
-    EasyLoading.show(maskType: EasyLoadingMaskType.black,);
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
-    final firebasePath =  firebaseStorage.ref(AppConstants.firebaseStorageImgPath).child(bookImageName.value);
+    final firebasePath = firebaseStorage
+        .ref(AppConstants.firebaseStorageImgPath)
+        .child(bookImageName.value);
     UploadTask uploadTask = firebasePath.putFile(File(bookImage.value));
-    await uploadTask.whenComplete((){});
+    await uploadTask.whenComplete(() {});
     firebasePath.getDownloadURL().then((value) async {
-
       final newBook = BookModel(
           bookName: bookNameController.text,
           bookAuthor: bookAuthorController.text,
@@ -85,8 +86,7 @@ class BookController extends GetxController{
           bookItem: bookQuantityController.text.toInt(),
           bookDescription: bookDescriptionController.text,
           bookCode: bookCodeController.text,
-          borrower: {}
-      );
+          borrower: {});
       final addBook = await bookDatabase.addBooks(newBook);
       print('BookServices._____________ ${addBook}');
       toast('${bookNameController.text} added!');
@@ -95,9 +95,7 @@ class BookController extends GetxController{
     });
 
     EasyLoading.dismiss();
-
   }
-
 
   getAllApplication() {
     Future<List<ApplicationModel>> result = bookDatabase.getAllApplication();
@@ -105,14 +103,14 @@ class BookController extends GetxController{
   }
 
   getAllBooks() {
-    Future<List<BookModel>> bookListResult =  bookDatabase.getAllBooks();
+    Future<List<BookModel>> bookListResult = bookDatabase.getAllBooks();
     print('BookController.getAllBooks-> ${bookListResult}');
     return bookListResult;
   }
 
-
   getBookById(String id) {
-    Future<BookModel> bookResult = bookDatabase.getBooks(id) as Future<BookModel>;
+    Future<BookModel> bookResult =
+        bookDatabase.getBooks(id) as Future<BookModel>;
     isReload.value = false;
     return bookResult;
   }
@@ -125,8 +123,8 @@ class BookController extends GetxController{
   }
 
   getBookByCode(String bookCode) async {
-   final book = await bookDatabase.getBookByCode(bookCode);
-   print('BookController.getBookByCode---- ${book?.bookCode}');
+    final book = await bookDatabase.getBookByCode(bookCode);
+    print('BookController.getBookByCode---- ${book?.bookCode}');
     return book;
   }
 
@@ -141,13 +139,13 @@ class BookController extends GetxController{
     return issuedBook;
   }
 
-  acceptApplication(String bookCode, String borrower, String bookName ) async {
+  acceptApplication(String bookCode, String borrower, String bookName) async {
     final newIssue = IssuedBookModel(
-          bookCode: bookCode,
-          uniqueBookCode: uniqueBookCodeController.text,
-          borrower: borrower,
-          dueDate: appDatetext.toString(),
-          bookName: bookName,
+      bookCode: bookCode,
+      uniqueBookCode: uniqueBookCodeController.text,
+      borrower: borrower,
+      dueDate: appDatetext.toString(),
+      bookName: bookName,
     );
 
     final addIssued = bookDatabase.addIssuedBook(newIssue);
@@ -156,11 +154,11 @@ class BookController extends GetxController{
     int newQuantity = bookContents!.bookHired.toInt() + 1;
 
     final updatedUserData = {
-      '$tblIssuedBooks.${uniqueBookCodeController.text}': appDatetext.toString(),
+      '$tblIssuedBooks.${uniqueBookCodeController.text}':
+          appDatetext.toString(),
     };
 
     final updateUser = await authDatabase.updateUser(borrower, updatedUserData);
-
 
     final updatedBookData = {
       tblBookHired: newQuantity,
@@ -174,10 +172,8 @@ class BookController extends GetxController{
     );
   }
 
-
   deleteApplication(BuildContext context, String bookCode, String email) async {
     try {
-
       Map applied = {};
 
       var applicationId = email + bookCode;
@@ -187,9 +183,7 @@ class BookController extends GetxController{
       applied = userData.applied;
       applied.remove(bookCode);
 
-      final userUpdateData = {
-        tblApplied:applied
-      };
+      final userUpdateData = {tblApplied: applied};
 
       final updateUser = authDatabase.updateUser(email, userUpdateData);
       final deleteApp = bookDatabase.deleteApplication(applicationId);
@@ -197,7 +191,6 @@ class BookController extends GetxController{
       Navigator.pop(context);
 
       return true;
-
     } catch (e) {
       Fluttertoast.showToast(
         msg: e.toString(),
@@ -205,21 +198,21 @@ class BookController extends GetxController{
     }
   }
 
-
   checkIssuedOrNot(String bookCode, String borrower) async {
     final result = await bookDatabase.checkIssued(bookCode);
 
     final bookInfo = await bookDatabase.getBookByCode(bookCode);
 
-    if(bookInfo!.borrower.isEmpty){
+    if (bookInfo!.borrower.isEmpty) {
       final userInfo = await authDatabase.getUserInfo(borrower);
-      if(userInfo.applied[bookCode] != null){
+      if (userInfo.applied[bookCode] != null) {
         Fluttertoast.showToast(
           msg: 'You have Already Applied!',
-          backgroundColor: Color(0xDDDE1B1B),);
+          backgroundColor: Color(0xDDDE1B1B),
+        );
       } else {
         String applicationId;
-        applicationId = borrower+bookCode;
+        applicationId = borrower + bookCode;
         print(applicationId);
 
         final application = ApplicationModel(
@@ -230,7 +223,8 @@ class BookController extends GetxController{
           bookName: bookInfo.bookName,
         );
 
-        final addApplication = await bookDatabase.addApplication(application , applicationId);
+        final addApplication =
+            await bookDatabase.addApplication(application, applicationId);
         final userData = {
           '$tblApplied.$bookCode': DateTime.now(),
         };
@@ -242,26 +236,26 @@ class BookController extends GetxController{
         );
       }
     } else {
-      var isIssued = bookInfo.borrower.keys.firstWhere((element){
-        if( bookInfo.borrower[element] == borrower){
+      var isIssued = bookInfo.borrower.keys.firstWhere((element) {
+        if (bookInfo.borrower[element] == borrower) {
           return true;
-        }else{
+        } else {
           return false;
         }
       });
 
-      if(isIssued != null){
+      if (isIssued != null) {
         Fluttertoast.showToast(msg: 'You have Already Issued!');
-      }else{
-
+      } else {
         final userInfo = await authDatabase.getUserInfo(borrower);
-        if(userInfo.applied[bookCode] != null){
+        if (userInfo.applied[bookCode] != null) {
           Fluttertoast.showToast(
-              msg: 'You have Already Applied!',
-              backgroundColor: Color(0xDDDE1B1B),);
+            msg: 'You have Already Applied!',
+            backgroundColor: Color(0xDDDE1B1B),
+          );
         } else {
           String applicationId;
-          applicationId = borrower+bookCode;
+          applicationId = borrower + bookCode;
           print(applicationId);
 
           final application = ApplicationModel(
@@ -272,7 +266,8 @@ class BookController extends GetxController{
             bookName: bookInfo.bookName,
           );
 
-          final addApplication = await bookDatabase.addApplication(application , applicationId);
+          final addApplication =
+              await bookDatabase.addApplication(application, applicationId);
           final userData = {
             '$tblApplied.$bookCode': DateTime.now(),
           };
@@ -288,32 +283,29 @@ class BookController extends GetxController{
       }
     }
 
-
     return result;
   }
 
-  available(int item, int hired){
+  available(int item, int hired) {
     total.value = item - hired;
     return total;
   }
 
-  itemLeft(int item, int hired){
-
-    final numberFormat =  NumberFormat("##", "en_US");
+  itemLeft(int item, int hired) {
+    final numberFormat = NumberFormat("##", "en_US");
     int total = item;
     int reserve = hired;
-    double count = reserve*100/total;
+    double count = reserve * 100 / total;
     double finalResult = 100 - count;
-    if(numberFormat.format(finalResult) == '100'){
+    if (numberFormat.format(finalResult) == '100') {
       return 1.0;
-    } else{
+    } else {
       String result = '0.${numberFormat.format(finalResult)}';
       return result.toDouble();
     }
   }
 
   clearController() {
-
     bookNameController.clear();
     bookAuthorController.clear();
     bookQuantityController.clear();
@@ -328,6 +320,5 @@ class BookController extends GetxController{
 
     bookImage.value = '';
     bookImageName.value = '';
-
   }
 }

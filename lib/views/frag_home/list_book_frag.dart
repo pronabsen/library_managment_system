@@ -12,7 +12,6 @@ import '../book_details_view.dart';
 class FragBookList extends StatelessWidget {
   FragBookList({Key? key}) : super(key: key);
 
-
   BookController bookController = Get.put(BookController());
   AuthController authController = Get.put(AuthController());
 
@@ -22,15 +21,14 @@ class FragBookList extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: FutureBuilder(
         future: bookController.getAllBooks(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<BookModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             return GridView.builder(
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 6,
-
                 mainAxisSpacing: 6,
                 childAspectRatio: 0.79,
               ),
@@ -40,10 +38,11 @@ class FragBookList extends StatelessWidget {
                   onTap: () async {
                     //      toast(snapshot.data![index].id.toString());
 
-                    Get.off(() => BookDetailsView(book_code: snapshot.data![index].bookCode.toString(), book_name:snapshot.data![index].bookName.toString()));
+                    Get.off(() => BookDetailsView(
+                        book_code: snapshot.data![index].bookCode.toString(),
+                        book_name: snapshot.data![index].bookName.toString()));
 
                     //        BookModel result = await bookController.getBookById(snapshot.data![index].id.toString());
-
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -63,8 +62,7 @@ class FragBookList extends StatelessWidget {
                                 image: DecorationImage(
                                     fit: BoxFit.fitWidth,
                                     image: NetworkImage(
-                                        snapshot.data![index].bookImage)
-                                ),
+                                        snapshot.data![index].bookImage)),
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(10.0),
                                     topRight: Radius.circular(10.0)),
@@ -75,12 +73,11 @@ class FragBookList extends StatelessWidget {
                               trailing: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '${bookController.available(
-                                      snapshot.data![index].bookItem,
-                                      snapshot.data![index].bookHired)
-                                      .toString()} left',
-                                  style: montserratTextStyle(fontSize: 11, color: Colors.grey),
-                                  maxLines: 1,),
+                                  '${bookController.available(snapshot.data![index].bookItem, snapshot.data![index].bookHired).toString()} left',
+                                  style: montserratTextStyle(
+                                      fontSize: 11, color: Colors.grey),
+                                  maxLines: 1,
+                                ),
                               ),
                               alignment: MainAxisAlignment.start,
                               lineHeight: 5,
@@ -92,20 +89,26 @@ class FragBookList extends StatelessWidget {
                               backgroundColor: Colors.grey[200],
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   //const SizedBox(height: 6,),
-                                  Text(snapshot.data![index].bookName,
-                                    style: montserratTextStyle(), maxLines: 2,),
-                                  Text(snapshot.data![index].bookAuthor,
+                                  Text(
+                                    snapshot.data![index].bookName,
+                                    style: montserratTextStyle(),
+                                    maxLines: 2,
+                                  ),
+                                  Text(
+                                    snapshot.data![index].bookAuthor,
                                     style: montserratTextStyle(
                                         fontSize: textSecondarySizeGlobal,
                                         color: textSecondaryColorGlobal,
-                                        weight: fontWeightSecondaryGlobal), maxLines: 1,)
+                                        weight: fontWeightSecondaryGlobal),
+                                    maxLines: 1,
+                                  )
                                 ],
                               ),
                             )
@@ -120,13 +123,15 @@ class FragBookList extends StatelessWidget {
                                   color: Colors.green,
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(8),
-                                      topRight: Radius.circular(10))
+                                      topRight: Radius.circular(10))),
+                              child: Text(
+                                snapshot.data![index].categories,
+                                style: montserratTextStyle(
+                                    fontSize: 10, color: Colors.white),
                               ),
-                              child: Text(snapshot.data![index].categories,
-                                style: montserratTextStyle(fontSize: 10, color: Colors.white),),
                             )
-                          //_available(snapshot.data![index].bookItem,snapshot.data![index].bookHired ),
-                        ),
+                            //_available(snapshot.data![index].bookItem,snapshot.data![index].bookHired ),
+                            ),
                         Positioned(
                           top: 0,
                           left: 0,
@@ -136,10 +141,12 @@ class FragBookList extends StatelessWidget {
                                 color: Colors.green,
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(8),
-                                    topLeft: Radius.circular(10))
+                                    topLeft: Radius.circular(10))),
+                            child: Text(
+                              snapshot.data![index].language,
+                              style: montserratTextStyle(
+                                  fontSize: 10, color: Colors.white),
                             ),
-                            child: Text(snapshot.data![index].language,
-                              style: montserratTextStyle(fontSize: 10, color: Colors.white),),
                           ),
                         )
                       ],
@@ -154,7 +161,8 @@ class FragBookList extends StatelessWidget {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  Align(alignment: AlignmentDirectional.center,
+                  Align(
+                      alignment: AlignmentDirectional.center,
                       child: noAvailableData()),
                 ],
               ),
@@ -164,7 +172,6 @@ class FragBookList extends StatelessWidget {
           }
           return Container();
         },
-
       ),
     );
   }

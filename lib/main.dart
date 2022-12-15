@@ -42,8 +42,8 @@ void configLoading() {
     ..textAlign = TextAlign.center
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = true
-    ..dismissOnTap =true ;
-    //..customAnimation = CustomAnimation();
+    ..dismissOnTap = true;
+  //..customAnimation = CustomAnimation();
 }
 
 class MyApp extends StatelessWidget {

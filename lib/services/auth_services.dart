@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -11,16 +10,15 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-   //   User? user = result.user.uid;
+      //   User? user = result.user.uid;
       return result.user?.uid;
     } catch (e) {
-   //   var error = e.toString().replaceAll(e.toString(), 'The email address is already in use by another account');
+      //   var error = e.toString().replaceAll(e.toString(), 'The email address is already in use by another account');
       toast('The email address is already in use by another account');
       print(e);
       return null;
     }
   }
-
 
   Future loginWithEmailAndPassword(String email, String password) async {
     try {
@@ -42,8 +40,6 @@ class AuthService {
       return null;
     }
   }
-
-
 
   Future signOut() async {
     try {

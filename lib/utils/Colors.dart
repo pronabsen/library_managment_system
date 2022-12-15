@@ -6,14 +6,11 @@ const appDarkColor = Color(0xFF1e2c45);
 const appGreyColor = Color(0xFF8d9cb2);
 const appBackGroundColor = Color(0xFFf8f9fd);
 
-
 const Color primaryBlackColor = Colors.black;
 const Color primaryWhiteColor = Colors.white;
 const Color primaryGreyColor = Colors.black87;
 const editTextBgColor = Color(0xFFEFEFEF);
 const BHAppTextColorPrimary = Color(0xFF212121);
-
-
 
 const appSecBorderColor = Color(0xFFD5D5D5);
 const appImageColor = Color(0xffd4221e);
@@ -46,8 +43,3 @@ const appColorPrimaryLight = Color(0xFFF9FAFF);
 const appTextColorPrimary = Color(0xFF212121);
 const appTextColorSecondary = Color(0xFF5A5C5E);
 const appShadowColor = Color(0x95E9EBF0);
-
-
-
-
-
