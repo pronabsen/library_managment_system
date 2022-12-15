@@ -6,12 +6,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:library_managment_system/old/utils/Constants.dart';
 import 'package:library_managment_system/views/admin_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
 import 'Colors.dart';
+import 'Constants.dart';
 
 Widget text({
   required String txt,

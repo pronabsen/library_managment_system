@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:library_managment_system/controller/auth_controller.dart';
 import 'package:library_managment_system/functions/shared_pref_helper.dart';
 import 'package:library_managment_system/utils/widgets.dart';
-import 'package:library_managment_system/views/admin_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
