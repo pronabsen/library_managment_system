@@ -12,7 +12,6 @@ import '../utils/Colors.dart';
 import '../utils/Constants.dart';
 import 'admin_home_views.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -21,8 +20,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   late SharedPreferences sharedPreferences;
   @override
   void initState() {
@@ -38,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final login = await SPHelper.getUserLoggedInSharedPreference();
     final admin = await SPHelper.getUserIsAdminSharedPreference();
 
-    setState(()  {
+    setState(() {
       isLogged = login;
       isAdmin = admin;
     });
@@ -48,14 +45,14 @@ class _SplashScreenState extends State<SplashScreen> {
     setStatusBarColor(Colors.transparent);
     await 3.seconds.delay;
 
-    if(isLogged){
-      if(isAdmin){
-        AdminHomeView().launch(context,isNewTask: true);
+    if (isLogged) {
+      if (isAdmin) {
+        AdminHomeView().launch(context, isNewTask: true);
       } else {
-        UserHomeView().launch(context,isNewTask: true);
+        UserHomeView().launch(context, isNewTask: true);
       }
-    }else {
-      LoginView().launch(context,isNewTask: true);
+    } else {
+      LoginView().launch(context, isNewTask: true);
     }
   }
 
@@ -68,14 +65,14 @@ class _SplashScreenState extends State<SplashScreen> {
     'https://www.hooksounds.com/assets/seo/illustration.svg',
     semanticsLabel: 'A shark?!',
     fit: BoxFit.cover,
-   // width: MediaQuery.of(context).size.width,
+    // width: MediaQuery.of(context).size.width,
     placeholderBuilder: (BuildContext context) => Container(
-      //  padding: const EdgeInsets.all(30.0),
+        //  padding: const EdgeInsets.all(30.0),
         child: const CircularProgressIndicator()),
   );
 
   final Widget textLiquidFill = SizedBox(
- //   width: 250.0,
+    //   width: 250.0,
     child: DefaultTextStyle(
       style: const TextStyle(
         fontSize: 30.0,
@@ -83,7 +80,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       child: AnimatedTextKit(
         animatedTexts: [
-
           FadeAnimatedText(appName),
           FadeAnimatedText(appName),
           FadeAnimatedText(appName),
@@ -109,17 +105,28 @@ class _SplashScreenState extends State<SplashScreen> {
             Column(
               children: [
                 SizedBox(height: context.statusBarHeight + 50),
-                Image.asset('assets/library_icon.png', height: 100, width: 100, fit: BoxFit.cover),
-               // textLiquidFill
-                Text(appName, style: boldTextStyle(size: 35, fontFamily: appFont, color: appDarkColor, weight: FontWeight.w900)),
+                Image.asset('assets/library_icon.png',
+                    height: 100, width: 100, fit: BoxFit.cover),
+                // textLiquidFill
+                Text(appName,
+                    style: boldTextStyle(
+                        size: 35,
+                        fontFamily: appFont,
+                        color: appDarkColor,
+                        weight: FontWeight.w900)),
               ],
             ),
             Positioned(
               bottom: 0,
-           child: Image.asset("assets/images/library.png", fit: BoxFit.cover,height: 300,),
-           //   child: Image.network('https://www.hooksounds.com/assets/seo/illustration.svg', width: context.width(), fit: BoxFit.cover),
+              child: Image.asset(
+                "assets/images/library.png",
+                fit: BoxFit.cover,
+                height: 300,
+              ),
+              //   child: Image.network('https://www.hooksounds.com/assets/seo/illustration.svg', width: context.width(), fit: BoxFit.cover),
             ),
-            Image.asset('assets/gifs/app_loader.gif', color: appDarkColor, width: 50, height: 50),
+            Image.asset('assets/gifs/app_loader.gif',
+                color: appDarkColor, width: 50, height: 50),
           ],
         ),
       ),

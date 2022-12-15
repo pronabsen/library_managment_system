@@ -24,7 +24,11 @@ Widget text({
   return Text(
     txt,
     textAlign: textAlign,
-    style: TextStyle(backgroundColor: backgroundColor, color: color, fontSize: size, fontWeight: fontWeight),
+    style: TextStyle(
+        backgroundColor: backgroundColor,
+        color: color,
+        fontSize: size,
+        fontWeight: fontWeight),
   );
 }
 
@@ -47,28 +51,34 @@ Widget customButton({
         height: high,
         width: wid,
         alignment: Alignment.center,
-        decoration: BoxDecoration(border: border, color: color, borderRadius: BorderRadius.circular(45)),
+        decoration: BoxDecoration(
+            border: border,
+            color: color,
+            borderRadius: BorderRadius.circular(45)),
         child: Text(txt, style: TextStyle(color: txtcolor)),
       ),
     ),
   );
 }
 
-Widget noAvailableData(){
-
+Widget noAvailableData() {
   return Center(
     child: Column(
       children: [
         const Image(
-          image: AssetImage('assets/images/no_data.jpg',),height: 150,
+          image: AssetImage(
+            'assets/images/no_data.jpg',
+          ),
+          height: 150,
         ),
         Text(
-          'No data available', style: GoogleFonts.montserrat(
-            textStyle: const TextStyle(
-              color: Color(0Xaa000839),
-              fontSize: 15.0,
-              fontWeight: FontWeight.w600,
-            )),
+          'No data available',
+          style: GoogleFonts.montserrat(
+              textStyle: const TextStyle(
+            color: Color(0Xaa000839),
+            fontSize: 15.0,
+            fontWeight: FontWeight.w600,
+          )),
         )
       ],
     ),
@@ -91,7 +101,10 @@ Widget customButton_1({
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(border: border, color: color, borderRadius: BorderRadius.circular(15)),
+        decoration: BoxDecoration(
+            border: border,
+            color: color,
+            borderRadius: BorderRadius.circular(15)),
         child: Text(txt, style: TextStyle(color: txtcolor)),
       ),
     ),
@@ -104,7 +117,7 @@ Future customDialoge(
   final List<Widget>? actions,
   // Flash? i,
   var arguments,
-      final int ? duration,
+  final int? duration,
 }) {
   //var flashObserver = i;
   return showDialog(
@@ -120,7 +133,7 @@ Future customDialoge(
         Duration(seconds: 50),
         () {
           Navigator.pop(context);
-       //   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          //   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         },
       );
       final high = MediaQuery.of(context).size.width;
@@ -133,12 +146,16 @@ Future customDialoge(
           child: Container(
             color: context.scaffoldBackgroundColor,
             alignment: Alignment.topCenter,
-        //    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            //    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             width: 80,
             child: Observer(
               builder: (context) => Transform.rotate(
                 angle: 0.5,
-                child: Image(image: AssetImage('assets/gifs/app_loader.gif'), color: Colors.black, height: high / 24 *5, width: high / 24 * 5),
+                child: Image(
+                    image: AssetImage('assets/gifs/app_loader.gif'),
+                    color: Colors.black,
+                    height: high / 24 * 5,
+                    width: high / 24 * 5),
               ),
             ),
           ),
@@ -152,23 +169,29 @@ TextStyle montserratTextStyle({
   Color? color,
   double? fontSize,
   FontWeight? weight,
-}){
+}) {
   return GoogleFonts.montserrat(
-        textStyle: TextStyle(
-        color: color ?? const Color(0Xaa000839) ,
-        fontSize: fontSize ?? 15.0,
-        fontWeight: weight ?? FontWeight.w600,
-        ));
-
+      textStyle: TextStyle(
+    color: color ?? const Color(0Xaa000839),
+    fontSize: fontSize ?? 15.0,
+    fontWeight: weight ?? FontWeight.w600,
+  ));
 }
 
-PreferredSizeWidget homeAppBar(BuildContext context, {String? titleText, Color? backgroundColor, Color? itemColor, Widget? actionWidget, Widget? actionWidget2}) {
+PreferredSizeWidget homeAppBar(BuildContext context,
+    {String? titleText,
+    Color? backgroundColor,
+    Color? itemColor,
+    Widget? actionWidget,
+    Widget? actionWidget2}) {
   return AppBar(
-    systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: backgroundColor?? white),
+    systemOverlayStyle:
+        SystemUiOverlayStyle(statusBarColor: backgroundColor ?? white),
     backgroundColor: backgroundColor ?? white,
     centerTitle: true,
-    title: Text(titleText ?? appName, style: GoogleFonts.montserrat(
-        textStyle: const TextStyle(
+    title: Text(titleText ?? appName,
+        style: GoogleFonts.montserrat(
+            textStyle: const TextStyle(
           color: Color(0Xaa000839),
           fontSize: 20.0,
           fontWeight: FontWeight.w600,
@@ -177,20 +200,27 @@ PreferredSizeWidget homeAppBar(BuildContext context, {String? titleText, Color? 
   );
 }
 
-
-PreferredSizeWidget customAppBarWidget(BuildContext context, {String? titleText, Color? backgroundColor, Color? itemColor, Widget? actionWidget, Widget? actionWidget2}) {
+PreferredSizeWidget customAppBarWidget(BuildContext context,
+    {String? titleText,
+    Color? backgroundColor,
+    Color? itemColor,
+    Widget? actionWidget,
+    Widget? actionWidget2}) {
   return AppBar(
-    systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: backgroundColor?? appSecBackGroundColor),
+    systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: backgroundColor ?? appSecBackGroundColor),
     backgroundColor: backgroundColor ?? appSecBackGroundColor,
     leading: IconButton(
       icon: Icon(Icons.arrow_back, color: itemColor ?? Colors.white),
       onPressed: () {
         Get.off(AdminHomeView());
-       // Home().launch(context, isNewTask: true);
+        // Home().launch(context, isNewTask: true);
       },
     ),
     actions: [actionWidget ?? SizedBox(), actionWidget2 ?? SizedBox()],
-    title: Text(titleText ?? "", style: montserratTextStyle(fontSize: 18, color: itemColor ?? Colors.black)),
+    title: Text(titleText ?? "",
+        style: montserratTextStyle(
+            fontSize: 18, color: itemColor ?? Colors.black)),
     elevation: 0.0,
   );
 }
@@ -212,7 +242,10 @@ InputDecoration inputDecoration(
     hintText: hintText.validate(),
     hintStyle: secondaryTextStyle(),
     isDense: true,
-    prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 16, color: appStore.isDarkModeOn ? white : gray) : null,
+    prefixIcon: prefixIcon != null
+        ? Icon(prefixIcon,
+            size: 16, color: appStore.isDarkModeOn ? white : gray)
+        : null,
     suffixIcon: suffixIcon.validate(),
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
@@ -237,13 +270,15 @@ InputDecoration inputDecoration(
   );
 }
 
-Decoration commonDecoration({double? cornorRadius, Color?color}) {
+Decoration commonDecoration({double? cornorRadius, Color? color}) {
   return boxDecorationWithRoundedCorners(
     backgroundColor: color ?? white,
     borderRadius: BorderRadius.all(Radius.circular(cornorRadius ?? 8.0)),
-    border: Border.all(color: appStore.isDarkModeOn ? white : gray.withOpacity(0.1)),
+    border: Border.all(
+        color: appStore.isDarkModeOn ? white : gray.withOpacity(0.1)),
   );
 }
+
 showAlertDialog(BuildContext context) {
   // Create button
   Widget okButton = ElevatedButton(

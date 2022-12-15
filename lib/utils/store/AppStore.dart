@@ -5,7 +5,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../Colors.dart';
 import '../Constants.dart';
 
-
 part 'AppStore.g.dart';
 
 class AppStore = AppStoreBase with _$AppStore;
