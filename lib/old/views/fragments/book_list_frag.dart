@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:library_managment_system/controller/book_controller.dart';
-import 'package:library_managment_system/database/book_db.dart';
-import 'package:library_managment_system/models/book_model.dart';
-import 'package:library_managment_system/views/book_details.dart';
+import 'package:library_managment_system/old/controller/book_controller.dart';
+import 'package:library_managment_system/old/database/book_db.dart';
+import 'package:library_managment_system/old/models/book_model.dart';
+import 'package:library_managment_system/old/views/book_details.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

@@ -1,17 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:library_managment_system/functions/shared_pref_helper.dart';
 import 'package:library_managment_system/services/auth_services.dart';
-import 'package:library_managment_system/views/add_book.dart';
-import 'package:library_managment_system/views/login.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../database/auth_db.dart';
 import '../models/UserModel.dart';
-import '../views/home.dart';
+import '../views/admin_home_views.dart';
+import '../views/user_home_views.dart';
 
 
 class AuthController extends GetxController {
@@ -22,6 +21,7 @@ class AuthController extends GetxController {
 
 
   final isLoading = false.obs;
+  final isAdmin = false.obs;
 
   //Login
   final formKey = GlobalKey<FormState>();
@@ -32,6 +32,10 @@ class AuthController extends GetxController {
   final checkBoxValue = false.obs;
 //  final f1 = FocusNode();
  // final f2 = FocusNode();
+
+  final userName = ''.obs;
+  final userEmail = ''.obs;
+  final userImage = ''.obs;
 
 
 
@@ -48,19 +52,23 @@ class AuthController extends GetxController {
 
           if(value != null){
             final querySnapshot = await authDatabase.getUserInfo(emailController.text);
-
+            isAdmin.value = querySnapshot.admin;
             SPHelper.saveUserLoggedInSharedPreference(true);
             SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
             SPHelper.saveUserEmailSharedPreference(querySnapshot.userEmail);
+            SPHelper.saveUserIsAdminSharedPreference(querySnapshot.admin);
             EasyLoading.dismiss();
             toast('Welcome Back! ${querySnapshot.userName}');
             isLoading.value = false;
+
          //   Get.to(Home());
 
-            Get.to(()=> const Home());
-
+            if(querySnapshot.admin){
+              Get.offAll(()=> const AdminHomeView());
+            } else {
+              Get.offAll(()=> const UserHomeView());
+            }
             _clearController();
-            print('AuthController.loginCTR- ${querySnapshot.userEmail}');
         } else {
             EasyLoading.dismiss();
             isLoading.value = false;
@@ -78,6 +86,7 @@ class AuthController extends GetxController {
   final regPassCTR = TextEditingController();
   final regNameCTR = TextEditingController();
   final birthDateCTR = TextEditingController();
+  final userRollCTR = TextEditingController();
 
 
   final focusEmail = FocusNode();
@@ -94,15 +103,15 @@ class AuthController extends GetxController {
         .then((result) {
       if(result != null){
         final newUser = UserModel(
-            userId: result,
             userName: regNameCTR.text,
             userImage: 'null',
             userEmail: regEmailCTR.text,
-            userPassword: regPassCTR.text,
             userDoB: birthDate.value.toString(),
             userGender: selectedGender.value.toString(),
-            admin: true,
-            trash: false
+            admin: false,
+            userRoll: userRollCTR.text,
+            issuedBooks: {},
+            applied: {}
         );
         authDatabase.addUserInfo(newUser);
         isLoading.value = false;
@@ -111,11 +120,11 @@ class AuthController extends GetxController {
         SPHelper.saveUserEmailSharedPreference(regEmailCTR.text);
         EasyLoading.dismiss();
 
-        toast('Welcome! Your account created successfully.');
-        Get.to(Home());
+        Fluttertoast.showToast(msg: 'Welcome! Your account created successfully.');
+      //  Get.to(Home());
 
 
-        _clearController();
+        //_clearController();
 
       } else {
         EasyLoading.dismiss();
@@ -137,6 +146,11 @@ class AuthController extends GetxController {
 
   }
 
+  getUserInfo(String email) async {
+    final querySnapshot = await authDatabase.getUserInfo(email);
+    return querySnapshot;
+  }
+
 
   @override
   void onClose() {
@@ -152,7 +166,7 @@ class AuthController extends GetxController {
 
     print('AuthController.dispose');
     super.dispose();
-//    Get.delete<AuthController>();
+    Get.delete<AuthController>();
   }
 
 

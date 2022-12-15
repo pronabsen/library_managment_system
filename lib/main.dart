@@ -4,12 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:library_managment_system/views/home.dart';
-import 'package:library_managment_system/views/login.dart';
 import 'package:library_managment_system/utils/Constants.dart';
 import 'package:library_managment_system/utils/sp_tools.dart';
 import 'package:library_managment_system/utils/store/AppStore.dart';
-import 'package:library_managment_system/views/register.dart';
+import 'package:library_managment_system/views/admin_home_views.dart';
+import 'package:library_managment_system/views/login_views.dart';
+import 'package:library_managment_system/views/registration_view.dart';
+import 'package:library_managment_system/views/splash_view.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 AppStore appStore = AppStore();
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
-      home: Home(),
+      home: const SplashScreen(),
       builder: EasyLoading.init(),
       //initialRoute: LauncherPage.routeName,
     );

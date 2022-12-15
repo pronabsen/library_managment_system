@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:library_managment_system/old/utils/Constants.dart';
+import 'package:library_managment_system/views/admin_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
-import '../views/home.dart';
 import 'Colors.dart';
 
 Widget text({
@@ -48,6 +50,27 @@ Widget customButton({
         decoration: BoxDecoration(border: border, color: color, borderRadius: BorderRadius.circular(45)),
         child: Text(txt, style: TextStyle(color: txtcolor)),
       ),
+    ),
+  );
+}
+
+Widget noAvailableData(){
+
+  return Center(
+    child: Column(
+      children: [
+        const Image(
+          image: AssetImage('assets/images/no_data.jpg',),height: 150,
+        ),
+        Text(
+          'No data available', style: GoogleFonts.montserrat(
+            textStyle: const TextStyle(
+              color: Color(0Xaa000839),
+              fontSize: 15.0,
+              fontWeight: FontWeight.w600,
+            )),
+        )
+      ],
     ),
   );
 }
@@ -125,6 +148,36 @@ Future customDialoge(
   );
 }
 
+TextStyle montserratTextStyle({
+  Color? color,
+  double? fontSize,
+  FontWeight? weight,
+}){
+  return GoogleFonts.montserrat(
+        textStyle: TextStyle(
+        color: color ?? const Color(0Xaa000839) ,
+        fontSize: fontSize ?? 15.0,
+        fontWeight: weight ?? FontWeight.w600,
+        ));
+
+}
+
+PreferredSizeWidget homeAppBar(BuildContext context, {String? titleText, Color? backgroundColor, Color? itemColor, Widget? actionWidget, Widget? actionWidget2}) {
+  return AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: backgroundColor?? white),
+    backgroundColor: backgroundColor ?? white,
+    centerTitle: true,
+    title: Text(titleText ?? appName, style: GoogleFonts.montserrat(
+        textStyle: const TextStyle(
+          color: Color(0Xaa000839),
+          fontSize: 20.0,
+          fontWeight: FontWeight.w600,
+        ))),
+    elevation: 0.0,
+  );
+}
+
+
 PreferredSizeWidget customAppBarWidget(BuildContext context, {String? titleText, Color? backgroundColor, Color? itemColor, Widget? actionWidget, Widget? actionWidget2}) {
   return AppBar(
     systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: backgroundColor?? appSecBackGroundColor),
@@ -132,12 +185,12 @@ PreferredSizeWidget customAppBarWidget(BuildContext context, {String? titleText,
     leading: IconButton(
       icon: Icon(Icons.arrow_back, color: itemColor ?? Colors.white),
       onPressed: () {
-        Get.off(Home());
+        Get.off(AdminHomeView());
        // Home().launch(context, isNewTask: true);
       },
     ),
     actions: [actionWidget ?? SizedBox(), actionWidget2 ?? SizedBox()],
-    title: Text(titleText ?? "", style: boldTextStyle(size: 18, color: itemColor ?? Colors.black)),
+    title: Text(titleText ?? "", style: montserratTextStyle(fontSize: 18, color: itemColor ?? Colors.black)),
     elevation: 0.0,
   );
 }

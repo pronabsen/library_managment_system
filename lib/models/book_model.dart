@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-const String tblBookId = 'id';
+const String tblBookCode = 'bookCode';
 const String tblBookName = 'book_name';
 const String tblBookAuthor = 'book_author';
 const String tblBookCategories = 'categories';
@@ -11,11 +11,12 @@ const String tblBookImage = 'book_image';
 const String tblBookItem = 'book_item';
 const String tblBookHired = 'book_hired';
 const String tblBookDescription = 'descriptions';
-const String tblBookStatus = 'status';
+const String tblBookBorrower = 'borrower';
 
 class BookModel {
 
-  final String? id;
+  final String bookCode;
+
   final String bookName;
   final String bookAuthor;
   final String categories;
@@ -26,10 +27,11 @@ class BookModel {
   final String bookDescription;
   final int bookItem;
   final int bookHired;
-  final bool bookStatus;
+  Map borrower = {};
 
   BookModel({
-    this.id = '0',
+    required this.bookCode,
+
     required this.bookName,
     required this.bookAuthor,
     required this.categories,
@@ -38,14 +40,14 @@ class BookModel {
     required this.language,
     required this.bookImage,
     required this.bookDescription,
-    this.bookItem = 0,
+    required this.bookItem,
     this.bookHired = 0,
-    this.bookStatus = true,
+    required this.borrower
   });
 
   Map<String, dynamic> toMap() {
     final map = <String,dynamic>{
-      tblBookId: id,
+      tblBookCode: bookCode,
       tblBookName: bookName,
       tblBookAuthor: bookAuthor,
       tblBookCategories: categories,
@@ -56,13 +58,13 @@ class BookModel {
       tblBookItem: bookItem,
       tblBookHired: bookHired,
       tblBookDescription: bookDescription,
-      tblBookStatus : bookStatus,
+      tblBookBorrower : borrower,
     };
     return map;
   }
 
   BookModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : id = doc.id,
+      : bookCode = doc.data()![tblBookCode],
         bookName = doc.data()![tblBookName],
         bookAuthor = doc.data()![tblBookAuthor],
         categories = doc.data()![tblBookCategories],
@@ -73,12 +75,12 @@ class BookModel {
         bookItem = doc.data()![tblBookItem],
         bookHired = doc.data()![tblBookHired],
         bookDescription = doc.data()![tblBookDescription],
-        bookStatus = doc.data()![tblBookStatus]
+        borrower = doc.data()![tblBookBorrower]
   ;
 
-  BookModel.fromMap(Map<String, dynamic>? doc, String bookId)
-      : id = bookId,
-        bookName = doc![tblBookName],
+  BookModel.fromMap(Map<String, dynamic>? doc)
+      : bookCode = doc![tblBookCode],
+        bookName = doc[tblBookName],
         bookAuthor = doc[tblBookAuthor],
         categories = doc[tblBookCategories],
         publication = doc[tblBookPublications],
@@ -88,7 +90,7 @@ class BookModel {
         bookItem = doc[tblBookItem],
         bookHired = doc[tblBookHired],
         bookDescription = doc[tblBookDescription],
-        bookStatus = doc[tblBookStatus]
+        borrower = doc[tblBookBorrower]
   ;
 
 

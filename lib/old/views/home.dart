@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:library_managment_system/views/add_book.dart';
-import 'package:library_managment_system/views/login.dart';
+import 'package:library_managment_system/old/views/add_book.dart';
+import 'package:library_managment_system/old/views/login.dart';
 
 import '../controller/home_controller.dart';
 import '../utils/Colors.dart';

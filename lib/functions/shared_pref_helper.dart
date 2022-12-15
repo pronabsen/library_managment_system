@@ -4,14 +4,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SPHelper {
 
   static String sharedPreferenceUserLoggedInKey = "ISLOGGEDIN";
+  static String sharedPreferenceUserIsAdminKey = "ISADMIN";
   static String sharedPreferenceUserNameKey = "USERNAMEKEY";
   static String sharedPreferenceUserEmailKey = "USEREMAILKEY";
 
   /// saving data to sharedpreference
   static Future<bool> saveUserLoggedInSharedPreference(bool isUserLoggedIn) async{
-
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setBool(sharedPreferenceUserLoggedInKey, isUserLoggedIn);
+  }
+
+  static Future<bool> saveUserIsAdminSharedPreference(bool isAdmin) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(sharedPreferenceUserIsAdminKey, isAdmin);
   }
 
   static Future<bool> saveUserNameSharedPreference(String userName) async{
@@ -29,6 +34,11 @@ class SPHelper {
   static Future<bool> getUserLoggedInSharedPreference() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.getBool(sharedPreferenceUserLoggedInKey) ?? false;
+  }
+
+  static Future<bool> getUserIsAdminSharedPreference() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getBool(sharedPreferenceUserIsAdminKey) ?? false;
   }
 
   static Future<String> getUserNameSharedPreference() async{

@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:library_managment_system/controller/book_controller.dart';
-import 'package:library_managment_system/functions/app_constants.dart';
-import 'package:library_managment_system/views/home.dart';
+import 'package:library_managment_system/old/controller/book_controller.dart';
+import 'package:library_managment_system/old/functions/app_constants.dart';
+import 'package:library_managment_system/old/views/home.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../utils/Colors.dart';

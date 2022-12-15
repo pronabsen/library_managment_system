@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:library_managment_system/views/register.dart';
+import 'package:library_managment_system/old/views/register.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../controller/auth_controller.dart';
-import '../main.dart';
+import '../../main.dart';
 import '../utils/Colors.dart';
 import '../utils/store/user_signup.dart';
 import '../utils/widgets.dart';

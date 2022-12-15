@@ -3,11 +3,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:library_managment_system/views/login.dart';
+import 'package:library_managment_system/old/views/login.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../controller/auth_controller.dart';
-import '../main.dart';
+import '../../main.dart';
 import '../utils/Colors.dart';
 import '../utils/sp_tools.dart';
 import '../utils/widgets.dart';

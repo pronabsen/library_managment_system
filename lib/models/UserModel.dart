@@ -1,36 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-const String tblUserId = 'user_id';
-const String tblUserName = 'user_name';
-const String tblUserImage = 'user_image';
-const String tblUserEmail = 'user_email';
-const String tblUserPassword = 'user_password';
-const String tblUserDOB = 'user_dob';
-const String tblUserGender = 'user_gender';
+const String tblUserName = 'userName';
+const String tblUserImage = 'userImage';
+const String tblUserEmail = 'userEmail';
+
+const String tblUserRoll = 'userRoll';
+const String tblIssuedBooks = 'issuedBooks';
+const String tblApplied = 'applied';
+const String tblBranch = 'branch';
+
+const String tblUserDOB = 'userDob';
+const String tblUserGender = 'userGender';
 const String tblUserAdmin = 'admin';
-const String tblUserTrash = 'trash';
 
 class UserModel {
-  final String? userId;
   final String userName;
   final String userImage;
   final String userEmail;
-  final String userPassword;
+
+  final String userRoll;
+  Map issuedBooks = {};
+  Map applied = {};
+  final String branch;
+
   final String userDoB;
   final String userGender;
   final bool admin;
-  final bool trash;
 
   UserModel({
-    this.userId,
     required this.userName,
     this.userImage = 'null',
     required this.userEmail,
-    required this.userPassword,
+    required this.userRoll,
+    required this.issuedBooks,
+    required this.applied,
+    this.branch = 'Admin',
     required this.userDoB,
     required this.userGender,
-    required this.admin,
-    required this.trash,
+    required this.admin
   });
 
   Map<String, dynamic> toMap() {
@@ -38,28 +45,47 @@ class UserModel {
       tblUserName : userName,
       tblUserImage : userImage,
       tblUserEmail : userEmail,
-      tblUserPassword : userPassword,
+
+      tblUserRoll : userRoll,
+      tblIssuedBooks : issuedBooks,
+      tblApplied : applied,
+      tblBranch : branch,
+
       tblUserDOB : userDoB,
       tblUserGender : userGender,
       tblUserAdmin : admin == null ? 0 : admin == true ? 1 : 0,
-      tblUserTrash : trash == null ? 0 : trash == true ? 1 : 0,
     };
-    if(userId != null) {
-      map[tblUserId] = userId;
-    }
     return map;
   }
 
   UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : userId = doc.id,
-        userName = doc.data()![tblUserName],
+      : userName = doc.data()![tblUserName],
         userEmail = doc.data()![tblUserEmail],
         userImage = doc.data()![tblUserImage],
-        userPassword = doc.data()![tblUserPassword],
+
+        userRoll = doc.data()![tblUserRoll],
+        issuedBooks = doc.data()![tblIssuedBooks],
+        applied = doc.data()![tblApplied],
+        branch = doc.data()![tblBranch],
+
         userDoB = doc.data()![tblUserDOB],
         userGender = doc.data()![tblUserGender],
-        admin = doc.data()![tblUserAdmin] == 0 ? false : true,
-        trash = doc.data()![tblUserTrash] == 0 ? false : true
+        admin = doc.data()![tblUserAdmin] == 0 ? false : true
+  ;
+
+  UserModel.fromMap(Map<String, dynamic>? doc)
+      : userName = doc![tblUserName],
+        userEmail = doc[tblUserEmail],
+        userImage = doc[tblUserImage],
+
+        userRoll = doc[tblUserRoll],
+        issuedBooks = doc[tblIssuedBooks],
+        applied = doc[tblApplied],
+        branch = doc[tblBranch],
+
+        userDoB = doc[tblUserDOB],
+        userGender = doc[tblUserGender],
+        admin = doc[tblUserAdmin] == 0 ? false : true
   ;
 
 
