@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../main.dart';
 import 'Colors.dart';
@@ -30,12 +29,3 @@ ButtonStyle ElevatedButtonStyle1 = ButtonStyle(
   shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(45))),
 );
-
-DotDecoration LightActiveDecoration = DotDecoration(
-  color: appStore.isDarkModeOn ? white : Colors.black,
-  borderRadius: BorderRadius.circular(20),
-  width: 20,
-);
-
-DotDecoration LightDecoration = DotDecoration(
-    color: Colors.grey.shade400, borderRadius: BorderRadius.circular(20));

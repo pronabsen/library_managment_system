@@ -20,7 +20,11 @@ class AddBookView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: homeAppBar(context, titleText: 'Add New Book'),
+        appBar: customAppBarWidget(
+            backgroundColor: Colors.white,
+            itemColor: Colors.black,
+            context,
+            titleText: 'Add New Book'),
         body: Obx(() {
           return Form(
             key: bookController.fromKey,

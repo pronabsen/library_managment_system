@@ -3,6 +3,7 @@ import 'package:library_managment_system/models/issued_book_model.dart';
 import 'package:library_managment_system/models/book_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../functions/shared_pref_helper.dart';
 import '../models/application_model.dart';
 
 class BookDatabase {
@@ -11,6 +12,28 @@ class BookDatabase {
       FirebaseFirestore.instance.collection("Applications");
   final issuedBookCollection =
       FirebaseFirestore.instance.collection("IssuedBooks");
+
+  Future<int> countApplication() async {
+    int application = 0;
+    int total = application;
+
+    final result = await applicationCollection.get();
+    if (result.docs.isNotEmpty) {
+      total = result.docs.length + application;
+    }
+    return total;
+  }
+
+  Future<int> countIssued() async {
+    int issued = 0;
+    int total = issued;
+
+    final result = await issuedBookCollection.get();
+    if (result.docs.isNotEmpty) {
+      total = result.docs.length + issued;
+    }
+    return total;
+  }
 
   Future addBooks(BookModel bookModel) async {
     bookCollection.doc(bookModel.bookCode).set(bookModel.toMap()).then((value) {
@@ -95,6 +118,23 @@ class BookDatabase {
     return true;
   }
 
+  Future deleteIssuedFromBook(String bookCode, String uniqueBookCode) async {
+    int newQuantity;
+    Map borrowerList = {};
+
+    final bookData = await bookCollection.doc(bookCode).get();
+    borrowerList = bookData.data()![tblBookBorrower];
+    newQuantity = bookData.data()![tblBookHired] - 1;
+    borrowerList.remove(uniqueBookCode);
+
+    final result = bookCollection.doc(bookCode).update({
+      tblBookBorrower: borrowerList,
+      tblBookHired: newQuantity,
+    });
+
+    return result;
+  }
+
   Future addApplication(
       ApplicationModel applicationModel, String applicationId) async {
     applicationCollection
@@ -114,8 +154,34 @@ class BookDatabase {
         .toList();
   }
 
+  Future<List<ApplicationModel>> getUserApplicationList() async {
+    final user = await SPHelper.getUserEmailSharedPreference();
+
+    final snapshot =
+        await applicationCollection.where('borrower', isEqualTo: user).get();
+
+    return snapshot.docs
+        .map((e) => ApplicationModel.fromDocumentSnapshot(e))
+        .toList();
+  }
+
+  Future<List<IssuedBookModel>> getUserIssuedList() async {
+    final user = await SPHelper.getUserEmailSharedPreference();
+
+    final snapshot =
+        await issuedBookCollection.where('borrower', isEqualTo: user).get();
+
+    return snapshot.docs
+        .map((e) => IssuedBookModel.fromDocumentSnapshot(e))
+        .toList();
+  }
+
   Future deleteApplication(String applicationId) async {
     return await applicationCollection.doc(applicationId).delete();
+  }
+
+  Future deleteIssued(String uniqueBookCode) async {
+    return await issuedBookCollection.doc(uniqueBookCode).delete();
   }
 
   Future addIssuedBook(IssuedBookModel issuedBookModel) async {

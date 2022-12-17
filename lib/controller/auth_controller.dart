@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:library_managment_system/functions/shared_pref_helper.dart';
 import 'package:library_managment_system/services/auth_services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../database/auth_db.dart';
+import '../functions/app_constants.dart';
 import '../models/UserModel.dart';
 import '../views/admin_home_views.dart';
 import '../views/user_home_views.dart';
@@ -15,6 +20,7 @@ import '../views/user_home_views.dart';
 class AuthController extends GetxController {
   AuthDatabase authDatabase = AuthDatabase();
   AuthService authService = AuthService();
+  final firebaseStorage = FirebaseStorage.instance;
 
   final isLoading = false.obs;
   final isAdmin = false.obs;
@@ -46,8 +52,7 @@ class AuthController extends GetxController {
             emailController.text, passwordController.text)
         .then((value) async {
       if (value != null) {
-        final querySnapshot =
-            await authDatabase.getUserInfo(emailController.text);
+        final querySnapshot = await authDatabase.getUserInfo(emailController.text);
         isAdmin.value = querySnapshot.admin;
         SPHelper.saveUserLoggedInSharedPreference(true);
         SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
@@ -68,8 +73,6 @@ class AuthController extends GetxController {
       } else {
         EasyLoading.dismiss();
         isLoading.value = false;
-        toast(
-            'There is no user record corresponding to this identifier. The user may have been deleted');
       }
     });
   }
@@ -81,50 +84,105 @@ class AuthController extends GetxController {
   final regNameCTR = TextEditingController();
   final birthDateCTR = TextEditingController();
   final userRollCTR = TextEditingController();
+  final userBranchCTR = TextEditingController();
 
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
   final selectedGender = 'Male'.obs;
+  final profileImage = ''.obs;
+  final profileImageName = ''.obs;
   final value = ''.obs;
   final birthDate = ''.obs;
+  final branch = 'N/A'.obs;
+
+
+  @override
+  onInit() async {
+    super.onInit();
+    final result = await SPHelper.getUserIsAdminSharedPreference();
+    print('AuthController.OnInit--. ${result}');
+    if (result != null) {
+      isAdmin.value = result;
+    }
+  }
+
+  getImage(BuildContext context, ImageSource imageSource) async {
+    final pickedImage = await ImagePicker().pickImage(source: imageSource);
+    if (pickedImage != null) {
+      profileImage.value = pickedImage.path;
+      profileImageName.value = pickedImage.name;
+
+      Navigator.pop(context);
+    } else {
+      toast('Select Images');
+    }
+  }
 
   registerCTR() async {
     EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
     );
     isLoading.value = true;
-    authService
-        .registerWithEmailAndPassword(regEmailCTR.text, regPassCTR.text)
-        .then((result) {
-      if (result != null) {
-        final newUser = UserModel(
-            userName: regNameCTR.text,
-            userImage: 'null',
-            userEmail: regEmailCTR.text,
-            userDoB: birthDate.value.toString(),
-            userGender: selectedGender.value.toString(),
-            admin: false,
-            userRoll: userRollCTR.text,
-            issuedBooks: {},
-            applied: {});
-        authDatabase.addUserInfo(newUser);
-        isLoading.value = false;
-        SPHelper.saveUserLoggedInSharedPreference(true);
-        SPHelper.saveUserNameSharedPreference(regNameCTR.text);
-        SPHelper.saveUserEmailSharedPreference(regEmailCTR.text);
-        EasyLoading.dismiss();
 
-        Fluttertoast.showToast(
-            msg: 'Welcome! Your account created successfully.');
-        //  Get.to(Home());
+    final firebasePath = firebaseStorage
+        .ref(AppConstants.firebaseStorageImgPathProfile)
+        .child(profileImageName.value);
+    UploadTask uploadTask = firebasePath.putFile(File(profileImage.value));
+    await uploadTask.whenComplete(() {});
+    firebasePath.getDownloadURL().then((image) async {
+      authService.registerWithEmailAndPassword(regEmailCTR.text, regPassCTR.text).then((result) async {
+        if (result != null) {
 
-        //_clearController();
+          final token = await authService.getToken().then((value){
 
-      } else {
-        EasyLoading.dismiss();
-        isLoading.value = false;
-      }
+            if(userBranchCTR.text.isNotEmpty){
+              branch.value = userBranchCTR.text;
+            }
+            if(value != null){
+
+              print('AuthController.registerCTR->>> ${value}');
+
+              final newUser = UserModel(
+                  userName: regNameCTR.text,
+                  userImage: image.toString(),
+                  userEmail: regEmailCTR.text,
+                  userDoB: birthDate.value.toString(),
+                  userGender: selectedGender.value.toString(),
+                  admin: false,
+                  userRoll: userRollCTR.text,
+                  issuedBooks: {},
+                  applied: {},
+                  userToken: value,
+                  branch: branch.value.toString());
+              authDatabase.addUserInfo(newUser);
+              isLoading.value = false;
+              SPHelper.saveUserLoggedInSharedPreference(true);
+              SPHelper.saveUserIsAdminSharedPreference(true);
+              SPHelper.saveUserNameSharedPreference(regNameCTR.text);
+              SPHelper.saveUserEmailSharedPreference(regEmailCTR.text);
+              EasyLoading.dismiss();
+
+              Fluttertoast.showToast(
+                  msg: 'Welcome! Your account created successfully.');
+
+              Get.offAll(() => const UserHomeView());
+
+              _clearController();
+
+            }
+          });
+
+
+
+
+        } else {
+          EasyLoading.dismiss();
+          isLoading.value = false;
+        }
+      });
     });
+
+
   }
 
   _clearController() {
@@ -142,6 +200,11 @@ class AuthController extends GetxController {
   getUserInfo(String email) async {
     final querySnapshot = await authDatabase.getUserInfo(email);
     return querySnapshot;
+  }
+
+  getUserList() {
+    Future<List<UserModel>> result = authDatabase.getUserList();
+    return result;
   }
 
   @override

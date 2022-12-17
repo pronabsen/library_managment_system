@@ -14,6 +14,12 @@ class AuthDatabase {
     });
   }
 
+  Future<List<UserModel>> getUserList() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await userCollection.get();
+
+    return snapshot.docs.map((e) => UserModel.fromDocumentSnapshot(e)).toList();
+  }
+
   Future<UserModel> getUserInfo(String email) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await userCollection.doc(email).get();
@@ -30,5 +36,19 @@ class AuthDatabase {
     return userCollection.doc(email).update(doc).catchError((onError) {
       Fluttertoast.showToast(msg: onError.toString());
     });
+  }
+
+  Future deleteIssueFromUser(String borrower, String uniqueBookCode) async {
+    Map issuedBooks = {};
+
+    final userData = await userCollection.doc(borrower).get();
+    issuedBooks = userData.data()![tblIssuedBooks];
+    issuedBooks.remove(uniqueBookCode);
+
+    final result = await userCollection.doc(borrower).update({
+      tblIssuedBooks: issuedBooks,
+    });
+
+    return result;
   }
 }

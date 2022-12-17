@@ -18,6 +18,8 @@ import 'frag_home/admin_home_frag.dart';
 import 'frag_home/issued_book_list.dart';
 import 'frag_home/list_book_frag.dart';
 import 'frag_home/settings_frag.dart';
+import 'frag_home/user_application.dart';
+import 'frag_home/user_issuedbook.dart';
 
 class UserHomeView extends StatefulWidget {
   const UserHomeView({Key? key}) : super(key: key);
@@ -55,6 +57,12 @@ class _UserHomeViewState extends State<UserHomeView> {
               },
               children: [
                 Container(
+                  child: UserApplication(),
+                ),
+                Container(
+                  child: UserIssued(),
+                ),
+                Container(
                   child: FragBookList(),
                 ),
                 Container(
@@ -62,15 +70,6 @@ class _UserHomeViewState extends State<UserHomeView> {
                 )
               ]),
         ),
-        floatingActionButton: _currentIndex == 4
-            ? Container()
-            : FloatingActionButton(
-                backgroundColor: Colors.blue,
-                child: const Icon(Icons.add_outlined),
-                onPressed: () {
-                  Get.off(AddBookView());
-                },
-              ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: Colors.blue,
           selectedIndex: _currentIndex,
@@ -82,6 +81,14 @@ class _UserHomeViewState extends State<UserHomeView> {
                 curve: Curves.ease);
           }),
           items: [
+            BottomNavyBarItem(
+                icon: const Icon(Icons.library_add_outlined),
+                title: const AutoSizeText('Application'),
+                activeColor: Colors.white),
+            BottomNavyBarItem(
+                icon: const Icon(Icons.library_add_check_outlined),
+                title: const AutoSizeText('Issued Book'),
+                activeColor: Colors.white),
             BottomNavyBarItem(
                 icon: const Icon(Icons.library_books_outlined),
                 title: const AutoSizeText('Books List'),

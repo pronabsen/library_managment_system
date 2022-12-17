@@ -5,12 +5,15 @@ import 'package:get/get.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/controller/admin_home_controller.dart';
+import 'package:library_managment_system/controller/auth_controller.dart';
 import 'package:library_managment_system/controller/book_controller.dart';
 import 'package:library_managment_system/utils/Constants.dart';
 import 'package:library_managment_system/views/frag_home/request_book_frag.dart';
+import 'package:library_managment_system/views/user_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../functions/shared_pref_helper.dart';
 import '../models/book_model.dart';
 import '../utils/widgets.dart';
 import 'add_book_view.dart';
@@ -33,6 +36,8 @@ class _AdminHomeViewState extends State<AdminHomeView> {
   @override
   void initState() {
     super.initState();
+
+    AdminHomeController().countApplicationIssuedList();
     _pageController = PageController();
   }
 
@@ -51,30 +56,24 @@ class _AdminHomeViewState extends State<AdminHomeView> {
           child: PageView(
               controller: _pageController,
               onPageChanged: (index) {
-                setState(() => _currentIndex = index);
+                setState(()  {
+                  _currentIndex = index;
+                  loadData();
+                });
               },
               children: [
-                Container(
-                  child: FragAdminHome(),
-                ),
-                Container(
-                  child: FragBookList(),
-                ),
-                Container(
-                  child: FragRequestBookList(),
-                ),
-                Container(
-                  child: FragIssuedBookList(),
-                ),
-                Container(
-                  child: SettingsPage(),
-                )
+                FragAdminHome(),
+                FragBookList(),
+                const FragRequestBookList(),
+                const FragIssuedBookList(),
+                SettingsPage()
               ]),
         ),
         floatingActionButton: _currentIndex == 4
             ? Container()
             : FloatingActionButton(
                 backgroundColor: Colors.blue,
+                elevation: 10,
                 child: const Icon(Icons.add_outlined),
                 onPressed: () {
                   Get.off(AddBookView());
@@ -84,12 +83,14 @@ class _AdminHomeViewState extends State<AdminHomeView> {
           backgroundColor: Colors.blue,
           selectedIndex: _currentIndex,
           showElevation: true, // use this to remove appBar's elevation
-          onItemSelected: (index) => setState(() {
-            _currentIndex = index;
-            _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.ease);
-          }),
+          onItemSelected: (index){
+            setState(() {
+              _currentIndex = index;
+              _pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.ease);
+            });
+          },
           items: [
             BottomNavyBarItem(
               icon: const Icon(Icons.dashboard_outlined),
@@ -114,5 +115,14 @@ class _AdminHomeViewState extends State<AdminHomeView> {
                 activeColor: Colors.white),
           ],
         ));
+  }
+
+  loadData() async {
+    if (!await SPHelper.getUserIsAdminSharedPreference()) {
+         Get.offAll(const UserHomeView());
+    }
+    AdminHomeController().countIssuedBook();
+    AdminHomeController().countBooks();
+    AdminHomeController().countApplicationIssuedList();
   }
 }

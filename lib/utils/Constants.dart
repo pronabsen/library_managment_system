@@ -6,8 +6,13 @@ import 'package:intl/intl.dart';
 
 double appButtonRadius = 4.0;
 double appBottomSheetRadius = 20.0;
+String appVersion = '1.0.0';
 String appName = "Library Management";
 String appNameCaps = "LIBRARY MANAGEMENT";
+String appDescription =
+    'Managing thousands of books, hundreds of memberships, and other library resources '
+    'is no easy feat. But now you can keep records, check readers in and out, and maintain a member database,'
+    ' all from a single app, efficiently and seamlessly.';
 
 const isDarkModeOnPref = 'isDarkModeOnPref';
 
@@ -18,14 +23,30 @@ const datePattern = 'dd-MM-yyyy';
 List<String?> bookTypes = ['Action', 'Sci-fi', 'Horror', 'Comedy', 'Thriller'];
 List<String?> bookLanguage = ['English', 'Bengali', 'Hindi', 'Others'];
 
-final List<String> imgList = [
-  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+class InstructionsFormat{
+  InstructionsFormat({required this.question,required this.answer});
+  String question;
+  String answer;
+}
+
+
+List<InstructionsFormat> userInstructionsList = [
+  InstructionsFormat(question: 'How to search for books?',answer: 'One the Home screen navigate to the applications section and tap the apply button.'),
+  InstructionsFormat(question: 'What do I search books with?',answer: 'Just type the name of the book and that book will appear apparently all the books are displayed already. Tap the result for more options.'),
+  InstructionsFormat(question: 'Unable to request for the book?',answer: 'The book that you have already applied for or have issued already can\'t be applied again.'),
+  InstructionsFormat(question: 'Applied for the book but not showing in applications?',answer: 'Try to refresh the home page to get the info. As it is not updated instantly.'),
+  InstructionsFormat(question: 'How to return a particular book?',answer: 'That is something that only the admin of the app can do. Contact The Library Administrator to return the book.'),
 ];
+
+List<InstructionsFormat> adminInstructionsList = [
+  InstructionsFormat(question: 'How to view The Applications?',answer: 'Navigate to Applications using the bottom navigation bar and then scroll down hit the view all button'),
+  InstructionsFormat(question: 'How to accept/reject Applications?',answer: 'Long press any application result and then choose the option. Enter the necessary details if you wish to accept and then hit accept. '),
+  InstructionsFormat(question: 'What do I search books with?',answer: 'Just type the name of the book and that book will appear apparently all the books are displayed already. Tap the result for more options.'),
+  InstructionsFormat(question: 'How to view the Due Books?',answer: 'Navigate to the issued books and hit view all. Long press any result to view the borrower details and dues.'),
+  InstructionsFormat(question: 'How to remove a particular returned books?',answer: 'Navigate to the issued books page and then search with the particular unique code.'),
+  InstructionsFormat(question: 'How to add a new book to the library?',answer: 'Hit the Floating Action Button. Enter the necessary details make sure they are correct and voila the book is added!'),
+];
+
 
 final List<String> developers = ['Pronab Sen Gupta'];
 

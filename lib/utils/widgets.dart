@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:library_managment_system/functions/shared_pref_helper.dart';
 import 'package:library_managment_system/views/admin_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
+import '../controller/auth_controller.dart';
+import '../views/user_home_views.dart';
 import 'Colors.dart';
 import 'Constants.dart';
 
@@ -196,6 +200,13 @@ PreferredSizeWidget homeAppBar(BuildContext context,
           fontSize: 20.0,
           fontWeight: FontWeight.w600,
         ))),
+    actions: [
+      IconButton(
+          onPressed: (){
+            Fluttertoast.showToast(msg: 'Coming in next build!', backgroundColor: Colors.deepOrangeAccent);
+          },
+          icon: const Icon(CupertinoIcons.bell_circle), color: Color(0Xaa000839),)
+    ],
     elevation: 0.0,
   );
 }
@@ -212,8 +223,14 @@ PreferredSizeWidget customAppBarWidget(BuildContext context,
     backgroundColor: backgroundColor ?? appSecBackGroundColor,
     leading: IconButton(
       icon: Icon(Icons.arrow_back, color: itemColor ?? Colors.white),
-      onPressed: () {
-        Get.off(AdminHomeView());
+      onPressed: () async {
+        print('customAppBarWidget---. ${AuthController().isAdmin}');
+        if (await SPHelper.getUserIsAdminSharedPreference()) {
+          Get.offAll(const AdminHomeView());
+        } else {
+          Get.off(const UserHomeView());
+        }
+
         // Home().launch(context, isNewTask: true);
       },
     ),

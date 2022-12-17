@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/controller/profile_settings_controller.dart';
 import 'package:library_managment_system/utils/Constants.dart';
 import 'package:library_managment_system/utils/widgets.dart';
 import 'package:get/get.dart';
 import 'package:library_managment_system/views/about_view.dart';
+import 'package:library_managment_system/views/faqs_view.dart';
 
 import '../devops_view.dart';
 
@@ -48,7 +50,8 @@ class SettingsPage extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(profileSettingsController
-                                      .userModel!.userImage)),
+                                          .userModel?.userImage ??
+                                      '')),
                             ),
                           ),
                         ),
@@ -73,6 +76,26 @@ class SettingsPage extends StatelessWidget {
                 title: "General",
                 children: [
                   ListTile(
+                    title: const Text('Edit Profile'),
+                    leading: const Icon(Icons.edit_location_outlined),
+                    trailing: const Icon(CupertinoIcons.forward, size: 18),
+                    onTap: () {
+                      Fluttertoast.showToast(
+                          msg: 'Coming in Next update!',
+                          backgroundColor: Colors.deepOrange);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Notifications'),
+                    leading: const Icon(CupertinoIcons.bell_circle),
+                    trailing: const Icon(CupertinoIcons.forward, size: 18),
+                    onTap: () {
+                      Fluttertoast.showToast(
+                          msg: 'Coming in Next update!',
+                          backgroundColor: Colors.deepOrange);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('Logout'),
                     leading: const Icon(Icons.logout_outlined),
                     trailing: const Icon(CupertinoIcons.forward, size: 18),
@@ -80,17 +103,6 @@ class SettingsPage extends StatelessWidget {
                       profileSettingsController.logout();
                     },
                   ),
-                  _CustomListTile(
-                      title: "Dark Mode",
-                      icon: CupertinoIcons.moon,
-                      trailing:
-                          CupertinoSwitch(value: false, onChanged: (value) {})),
-                  const _CustomListTile(
-                      title: "System Apps Updater",
-                      icon: CupertinoIcons.cloud_download),
-                  const _CustomListTile(
-                      title: "Security Status",
-                      icon: CupertinoIcons.lock_shield),
                 ],
               ),
               _SingleSection(
@@ -102,6 +114,14 @@ class SettingsPage extends StatelessWidget {
                     trailing: const Icon(CupertinoIcons.forward, size: 18),
                     onTap: () {
                       Get.off(DeveloperTeamView());
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('FAQs'),
+                    leading: const Icon(CupertinoIcons.quote_bubble),
+                    trailing: const Icon(CupertinoIcons.forward, size: 18),
+                    onTap: () {
+                      Get.off(Faqs_view());
                     },
                   ),
                   ListTile(

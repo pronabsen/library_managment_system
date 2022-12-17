@@ -1,8 +1,5 @@
 import 'dart:ffi';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:library_managment_system/views/login_views.dart';
 import 'package:library_managment_system/views/user_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -61,37 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  final Widget networkSvg = SvgPicture.network(
-    'https://www.hooksounds.com/assets/seo/illustration.svg',
-    semanticsLabel: 'A shark?!',
-    fit: BoxFit.cover,
-    // width: MediaQuery.of(context).size.width,
-    placeholderBuilder: (BuildContext context) => Container(
-        //  padding: const EdgeInsets.all(30.0),
-        child: const CircularProgressIndicator()),
-  );
-
-  final Widget textLiquidFill = SizedBox(
-    //   width: 250.0,
-    child: DefaultTextStyle(
-      style: const TextStyle(
-        fontSize: 30.0,
-        fontWeight: FontWeight.bold,
-      ),
-      child: AnimatedTextKit(
-        animatedTexts: [
-          FadeAnimatedText(appName),
-          FadeAnimatedText(appName),
-          FadeAnimatedText(appName),
-          FadeAnimatedText(appName),
-        ],
-        onTap: () {
-          print("Tap Event");
-        },
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +86,8 @@ class _SplashScreenState extends State<SplashScreen> {
               bottom: 0,
               child: Image.asset(
                 "assets/images/library.png",
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
+                width: MediaQuery.of(context).size.width,
                 height: 300,
               ),
               //   child: Image.network('https://www.hooksounds.com/assets/seo/illustration.svg', width: context.width(), fit: BoxFit.cover),

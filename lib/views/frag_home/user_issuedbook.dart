@@ -2,36 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:library_managment_system/controller/book_controller.dart';
 import 'package:library_managment_system/models/issued_book_model.dart';
 
 import '../../controller/auth_controller.dart';
-import '../../controller/book_controller.dart';
 import '../../models/UserModel.dart';
+import '../../models/application_model.dart';
 import '../../models/book_model.dart';
 import '../../utils/widgets.dart';
 
-class FragIssuedBookList extends StatefulWidget {
-  const FragIssuedBookList({Key? key}) : super(key: key);
+class UserIssued extends StatefulWidget {
+  const UserIssued({Key? key}) : super(key: key);
 
   @override
-  State<FragIssuedBookList> createState() => _FragIssuedBookListState();
+  State<UserIssued> createState() => _UserIssuedState();
 }
 
-class _FragIssuedBookListState extends State<FragIssuedBookList> {
+class _UserIssuedState extends State<UserIssued> {
   BookController bookController = Get.put(BookController());
   AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      var callApi = bookController.getIssuedBook();
-
-      if (bookController.isReload.isTrue) {
-        callApi = bookController.getIssuedBook();
-      }
-
-      return FutureBuilder(
-        future: callApi,
+    return Container(
+      child: FutureBuilder(
+        future: bookController.getUserIssued(),
         builder: (BuildContext context,
             AsyncSnapshot<List<IssuedBookModel>> snapshot) {
           print('_FragIssuedBookListState.build---> ${snapshot.data}');
@@ -105,8 +100,8 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      );
-    });
+      ),
+    );
   }
 
   showBottomSheet(BuildContext context, IssuedBookModel issuedBookModel) async {
@@ -352,31 +347,6 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  bookController.deleteIssue(
-                                      context,
-                                      issuedBookModel.uniqueBookCode,
-                                      issuedBookModel.borrower,
-                                      issuedBookModel.bookCode);
-
-                                  setState(() {});
-                                },
-                                child: Text(
-                                  'Delete',
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                      fontSize: 21,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10.0),

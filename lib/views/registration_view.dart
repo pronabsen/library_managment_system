@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:library_managment_system/views/login_views.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -22,79 +25,89 @@ class RegistrationView extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: careaAppBarWidget(context),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: formRegKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // const Image(height: 110, width: 110, fit: BoxFit.cover, image: AssetImage('assets/app_icon.png'),),
-                  const SizedBox(height: 16),
-                  Text('Create Your Account', style: boldTextStyle(size: 24)),
-                  const SizedBox(height: 40),
-                  _name(context),
-                  const SizedBox(height: 20),
-                  _email(context),
-                  const SizedBox(height: 20),
-                  _rollNo(context),
-                  const SizedBox(height: 20),
-                  _dateOfBirth(context),
-                  const SizedBox(height: 20),
-                  _gender(context),
-                  const SizedBox(height: 20),
-                  _password(context),
-                  const SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () async {
-                      if (formRegKey.currentState!.validate()) {
-                        await authController.registerCTR();
-                      } else {
-                        print("Not Validated");
-                      }
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      alignment: Alignment.center,
-                      decoration: boxDecorationWithRoundedCorners(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(45)),
-                        backgroundColor: appSecBackGroundColor,
-                      ),
-                      child:
-                          Text('Sign Up', style: boldTextStyle(color: white)),
-                    ),
-                  ),
-                  //Divider
-
-                  const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: () {
-                      Get.to(LoginView());
-
-                      // Get.to(const LoginWithPassScreen());
-                    },
-                    child: Text.rich(
-                      TextSpan(
-                        text: "Already have account? ",
-                        style: secondaryTextStyle(),
-                        children: [
-                          TextSpan(text: ' Sign in', style: primaryTextStyle()),
-                        ],
+      body: Obx(() {
+        return Center(
+          child: SingleChildScrollView(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: formRegKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // const Image(height: 110, width: 110, fit: BoxFit.cover, image: AssetImage('assets/app_icon.png'),),
+                    const SizedBox(height: 16),
+                    Text('Create Your Account', style: boldTextStyle(size: 24)),
+                    const SizedBox(height: 40),
+                    _profilePic(context),
+                    const SizedBox(height: 40),
+                    _name(context),
+                    const SizedBox(height: 20),
+                    _email(context),
+                    const SizedBox(height: 20),
+                    _rollNo(context),
+                    const SizedBox(height: 20),
+                    _dateOfBirth(context),
+                    const SizedBox(height: 20),
+                    _branch(context),
+                    const SizedBox(height: 20),
+                    _gender(context),
+                    const SizedBox(height: 20),
+                    _password(context),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () async {
+                        if (formRegKey.currentState!.validate()) {
+                          await authController.registerCTR();
+                        } else {
+                          print("Not Validated");
+                        }
+                      },
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        alignment: Alignment.center,
+                        decoration: boxDecorationWithRoundedCorners(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(45)),
+                          backgroundColor: appSecBackGroundColor,
+                        ),
+                        child:
+                        Text('Sign Up', style: boldTextStyle(color: white)),
                       ),
                     ),
-                  ),
-                ],
+                    //Divider
+
+                    const SizedBox(height: 15),
+                    TextButton(
+                      onPressed: () {
+                        Get.to(LoginView());
+
+                        // Get.to(const LoginWithPassScreen());
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          text: "Already have account? ",
+                          style: secondaryTextStyle(),
+                          children: [
+                            TextSpan(
+                                text: ' Sign in', style: primaryTextStyle()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -134,7 +147,22 @@ class RegistrationView extends StatelessWidget {
       },
       controller: authController.userRollCTR,
       decoration:
-          inputDecoration(context, prefixIcon: Icons.pin, hintText: "Roll No"),
+      inputDecoration(context, prefixIcon: Icons.pin, hintText: "Roll No"),
+    );
+  }
+
+  _branch(BuildContext context) {
+    return TextFormField(
+      autofocus: false,
+      keyboardType: TextInputType.text,
+      onFieldSubmitted: (v) {
+        // authController.focusEmail.unfocus();
+        // FocusScope.of(context).requestFocus(focusEmail);
+      },
+      controller: authController.userBranchCTR,
+      decoration:
+      inputDecoration(context, prefixIcon: Icons.school,
+          hintText: "School/College/University Name"),
     );
   }
 
@@ -213,7 +241,7 @@ class RegistrationView extends StatelessWidget {
                   child: DropdownButton<String>(
                     value: authController.selectedGender.value,
                     items:
-                        <String>['Male', 'Female', 'Other'].map((String value) {
+                    <String>['Male', 'Female', 'Other'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -234,51 +262,222 @@ class RegistrationView extends StatelessWidget {
     return Column(
       children: [
         Observer(
-          builder: (context) => TextFormField(
-            autofocus: false,
-            focusNode: authController.focusPassword,
-            controller: authController.regPassCTR,
-            obscureText: authController.isIconTrue.value,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "* Required";
-              } else {
-                return null;
-              }
-            },
-            onFieldSubmitted: (v) {
-              authController.focusPassword.unfocus();
-              if (formRegKey.currentState!.validate()) {
-                //
-              }
-            },
-            decoration: inputDecoration(
-              context,
-              prefixIcon: Icons.lock,
-              hintText: "Password",
-              suffixIcon: Theme(
-                data: ThemeData(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent),
-                child: IconButton(
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    authController.isIconTrue.value = false;
-                  },
-                  icon: Icon(
-                    (authController.isIconTrue.isTrue)
-                        ? Icons.visibility_rounded
-                        : Icons.visibility_off,
-                    size: 16,
-                    color: appStore.isDarkModeOn ? white : gray,
+          builder: (context) =>
+              TextFormField(
+                autofocus: false,
+                focusNode: authController.focusPassword,
+                controller: authController.regPassCTR,
+                obscureText: authController.isIconTrue.value,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "* Required";
+                  } else {
+                    return null;
+                  }
+                },
+                onFieldSubmitted: (v) {
+                  authController.focusPassword.unfocus();
+                  if (formRegKey.currentState!.validate()) {
+                    //
+                  }
+                },
+                decoration: inputDecoration(
+                  context,
+                  prefixIcon: Icons.lock,
+                  hintText: "Password",
+                  suffixIcon: Theme(
+                    data: ThemeData(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent),
+                    child: IconButton(
+                      highlightColor: Colors.transparent,
+                      onPressed: () {
+                        authController.isIconTrue.value = false;
+                      },
+                      icon: Icon(
+                        (authController.isIconTrue.isTrue)
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off,
+                        size: 16,
+                        color: appStore.isDarkModeOn ? white : gray,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
         ),
         const SizedBox(height: 20),
       ],
     );
   }
+
+  _profilePic(BuildContext context) {
+    if (authController.profileImage.value.isEmpty) {
+      return Stack(
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/profile_placeholder.png')
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              color: Colors.redAccent,
+            ),
+          ),
+          Positioned(
+              right: 0,
+              bottom: 0,
+              child: InkWell(
+                  onTap: () {
+                    selectProfileImage(context);
+                  },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        topLeft: Radius.circular(50),
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(8),
+
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: const Icon(
+                      Icons.camera, size: 25, color: Colors.orange,),
+                  )))
+        ],
+      );
+    } else {
+      return Stack(
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: FileImage(File(authController.profileImage.value))
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              color: Colors.redAccent,
+            ),
+          ),
+          Positioned(
+              right: 0,
+              bottom: 0,
+              child: InkWell(
+                  onTap: () {
+                    selectProfileImage(context);
+                  },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        topLeft: Radius.circular(50),
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(8),
+
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: const Icon(
+                      Icons.camera, size: 25, color: Colors.orange,),
+                  )))
+        ],
+      );
+    }
+  }
+
+  selectProfileImage(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.blue,
+        context: context,
+        builder: (context) {
+          return Container(
+            color: Colors.blue,
+            width: double.infinity,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height / 2 * 0.3,
+            margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Column(
+              children: [
+                Text(
+                  'Choose option',
+                  style: boldTextStyle(size: 20, color: Colors.white),
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        authController.getImage(context, ImageSource.camera);
+                      },
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.camera,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Camera',
+                              style: boldTextStyle(
+                                  size: 20, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        authController.getImage(context, ImageSource.gallery);
+                      },
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.image,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Gallery',
+                              style: boldTextStyle(
+                                  size: 20, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+  }
+
 }

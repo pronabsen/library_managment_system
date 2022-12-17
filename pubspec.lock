@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.10"
-  animated_text_kit:
-    dependency: "direct main"
-    description:
-      name: animated_text_kit
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.2"
   archive:
     dependency: transitive
     description:
@@ -57,13 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.0"
-  carousel_slider:
-    dependency: "direct main"
-    description:
-      name: carousel_slider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.1"
   characters:
     dependency: transitive
     description:
@@ -176,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  expandable:
+    dependency: "direct main"
+    description:
+      name: expandable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -260,6 +253,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1+17"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "14.1.4"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.8"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.9"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -287,7 +301,7 @@ packages:
       name: fl_chart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.55.2"
+    version: "0.55.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -342,25 +356,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.0"
-  flutter_svg:
-    dependency: "direct main"
-    description:
-      name: flutter_svg
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.22.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_vector_icons:
-    dependency: "direct main"
-    description:
-      name: flutter_vector_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -380,13 +380,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.6.5"
-  get_storage:
-    dependency: "direct main"
-    description:
-      name: get_storage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   google_fonts:
     dependency: "direct main"
     description:
@@ -478,13 +471,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  lottie:
-    dependency: "direct main"
-    description:
-      name: lottie
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.3"
   matcher:
     dependency: transitive
     description:
@@ -534,20 +520,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
-  path_drawing:
-    dependency: transitive
-    description:
-      name: path_drawing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.1+1"
-  path_parsing:
-    dependency: transitive
-    description:
-      name: path_parsing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
   path_provider:
     dependency: "direct main"
     description:
@@ -604,13 +576,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.2"
-  persistent_bottom_nav_bar:
-    dependency: "direct main"
-    description:
-      name: persistent_bottom_nav_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.2"
   petitparser:
     dependency: transitive
     description:
@@ -707,13 +672,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smooth_page_indicator:
-    dependency: "direct main"
-    description:
-      name: smooth_page_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0+2"
   source_span:
     dependency: transitive
     description:
@@ -721,20 +679,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
-  sqflite:
-    dependency: "direct main"
-    description:
-      name: sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.2"
-  sqflite_common:
-    dependency: transitive
-    description:
-      name: sqflite_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.4.0+2"
   stack_trace:
     dependency: transitive
     description:
@@ -756,13 +700,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0+3"
   term_glyph:
     dependency: transitive
     description:
@@ -877,4 +814,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.18.2 <3.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=2.12.0"

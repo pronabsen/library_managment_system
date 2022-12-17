@@ -9,24 +9,16 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.5
   mobx: 
-  flutter_mobx: 
-  persistent_bottom_nav_bar: 
-  animated_text_kit: 
-  smooth_page_indicator: 
-  image_picker: 
-  sqflite: 
+  flutter_mobx:
+  image_picker:
   path: ^1.8.2
   path_provider: ^2.0.11
-  get_storage: 
   cloud_firestore: 
   firebase_core: 
-  shared_preferences: 
-  flutter_svg: ^0.22.0
+  shared_preferences:
   nb_utils: 
-  intl: 
-  flutter_vector_icons: 
-  google_fonts: 
-  lottie: ^1.0.1
+  intl:
+  google_fonts:
   fluttertoast: ^8.0.7
 
 
@@ -39,9 +31,10 @@ dependencies:
   flutter_image_compress: ^1.1.3
   bottom_navy_bar: ^6.0.0
   auto_size_text: ^3.0.0
-  fl_chart: ^0.55.2
-  carousel_slider:
+  fl_chart: 0.55.1
   url_launcher: ^6.1.7
+  expandable: ^5.0.1
+  firebase_messaging:
 
 
 dev_dependencies:

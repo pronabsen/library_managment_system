@@ -1,40 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:library_managment_system/models/issued_book_model.dart';
+import 'package:library_managment_system/controller/book_controller.dart';
 
 import '../../controller/auth_controller.dart';
-import '../../controller/book_controller.dart';
 import '../../models/UserModel.dart';
+import '../../models/application_model.dart';
 import '../../models/book_model.dart';
 import '../../utils/widgets.dart';
 
-class FragIssuedBookList extends StatefulWidget {
-  const FragIssuedBookList({Key? key}) : super(key: key);
+class UserApplication extends StatefulWidget {
+  const UserApplication({Key? key}) : super(key: key);
 
   @override
-  State<FragIssuedBookList> createState() => _FragIssuedBookListState();
+  State<UserApplication> createState() => _UserApplicationState();
 }
 
-class _FragIssuedBookListState extends State<FragIssuedBookList> {
+class _UserApplicationState extends State<UserApplication> {
   BookController bookController = Get.put(BookController());
   AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      var callApi = bookController.getIssuedBook();
-
-      if (bookController.isReload.isTrue) {
-        callApi = bookController.getIssuedBook();
-      }
-
-      return FutureBuilder(
-        future: callApi,
+    return Container(
+      child: FutureBuilder(
+        future: bookController.getUserApplication(),
         builder: (BuildContext context,
-            AsyncSnapshot<List<IssuedBookModel>> snapshot) {
-          print('_FragIssuedBookListState.build---> ${snapshot.data}');
+            AsyncSnapshot<List<ApplicationModel>> snapshot) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             return Container(
               padding: const EdgeInsets.all(5),
@@ -52,33 +44,26 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          showBottomSheet(context, snapshot.data![index]);
+                          showBottomSheet(
+                              context,
+                              snapshot.data![index].borrower,
+                              snapshot.data![index].bookName,
+                              snapshot.data![index].bookCode);
                         });
                       },
                       child: ListTile(
                         title: Text(
+                          '${snapshot.data![index].borrowerName} applied for '
                           '${snapshot.data![index].bookName} (${snapshot.data![index].bookCode})',
                           style: GoogleFonts.montserrat(
                               textStyle: const TextStyle(
                             color: Color(0Xaa000839),
-                            fontSize: 17.0,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.w600,
                           )),
                         ),
-                        subtitle: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Borrower: ${snapshot.data![index].borrower}'),
-                            Text('Due Date: ${snapshot.data![index].dueDate}'),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
+                        subtitle:
+                            Text('Email: ${snapshot.data![index].borrower}'),
                         trailing: const Icon(
                           Icons.arrow_circle_right_outlined,
                           color: Color(0Xaa000839),
@@ -105,15 +90,15 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      );
-    });
+      ),
+    );
   }
 
-  showBottomSheet(BuildContext context, IssuedBookModel issuedBookModel) async {
-    UserModel user = await authController.getUserInfo(issuedBookModel.borrower);
+  showBottomSheet(BuildContext context, String email, String bookName,
+      String bookCode) async {
+    UserModel user = await authController.getUserInfo(email);
 
-    BookModel bookItem =
-        await bookController.getBookByCode(issuedBookModel.bookCode);
+    BookModel bookItem = await bookController.getBookByCode(bookCode);
     bookController.isAvailable.value =
         !(bookItem.bookItem == bookItem.bookHired);
     print('_FragRequestBookListState.showBottomSheet--- ${user.userEmail}');
@@ -141,10 +126,10 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                     child: Column(
                       children: [
                         Text(
-                          'Issued for #${issuedBookModel.bookName} (${issuedBookModel.bookCode})',
+                          'Application for #$bookName',
                           style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
-                              color: Colors.deepOrange,
+                              color: Color(0Xff6C63FF),
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                               decorationThickness: 4.0,
@@ -199,54 +184,10 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                                     ),
                                   ),
                                   const SizedBox(height: 15.0),
-                                  Text(
-                                    '• Due Date',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15.0),
-                                  Text(
-                                    '• Fine(-)',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15.0),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  const SizedBox(height: 15.0),
-                                  Text(
-                                    ' : ',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15.0),
-                                  Text(
-                                    ' : ',
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
                                   const SizedBox(height: 15.0),
                                   Text(
                                     ' : ',
@@ -320,29 +261,6 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                                     ),
                                   ),
                                   const SizedBox(height: 15.0),
-                                  Text(
-                                    issuedBookModel.dueDate,
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15.0),
-                                  Text(
-                                    fineCalculator(issuedBookModel.dueDate)
-                                        .toString(),
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15.0),
                                 ],
                               ),
                             ],
@@ -352,31 +270,6 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  bookController.deleteIssue(
-                                      context,
-                                      issuedBookModel.uniqueBookCode,
-                                      issuedBookModel.borrower,
-                                      issuedBookModel.bookCode);
-
-                                  setState(() {});
-                                },
-                                child: Text(
-                                  'Delete',
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                      fontSize: 21,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10.0),
@@ -404,21 +297,5 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
             ),
           );
         });
-  }
-
-  fineCalculator(String date) {
-    try {
-      var due = DateTime.parse(date);
-      var cur = DateTime.now();
-      var fine = cur.difference(due).inDays;
-      if (fine <= 0) {
-        fine = 0;
-      }
-      return fine;
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: e.toString(),
-      );
-    }
   }
 }

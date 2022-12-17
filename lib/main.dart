@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:library_managment_system/utils/Constants.dart';
-import 'package:library_managment_system/utils/sp_tools.dart';
 import 'package:library_managment_system/utils/store/AppStore.dart';
 import 'package:library_managment_system/views/admin_home_views.dart';
 import 'package:library_managment_system/views/login_views.dart';
@@ -19,7 +18,6 @@ void main() async {
 //  _sharedPreferences = await SharedPreferences.getInstance();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Get.put(SPTools()).initStorage();
   defaultRadius = 10;
   EasyLoading.init();
   defaultToastGravityGlobal = ToastGravity.BOTTOM;
@@ -55,9 +53,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.light(),
+      //  darkTheme: ThemeData.dark(),
       //theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
       home: const SplashScreen(),
       builder: EasyLoading.init(),

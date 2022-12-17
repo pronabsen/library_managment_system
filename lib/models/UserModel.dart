@@ -11,6 +11,7 @@ const String tblBranch = 'branch';
 
 const String tblUserDOB = 'userDob';
 const String tblUserGender = 'userGender';
+const String tblUserToken = 'userToken';
 const String tblUserAdmin = 'admin';
 
 class UserModel {
@@ -25,6 +26,7 @@ class UserModel {
 
   final String userDoB;
   final String userGender;
+  final String userToken;
   final bool admin;
 
   UserModel(
@@ -34,9 +36,10 @@ class UserModel {
       required this.userRoll,
       required this.issuedBooks,
       required this.applied,
-      this.branch = 'Admin',
+      required this.branch,
       required this.userDoB,
       required this.userGender,
+      required this.userToken,
       required this.admin});
 
   Map<String, dynamic> toMap() {
@@ -50,11 +53,8 @@ class UserModel {
       tblBranch: branch,
       tblUserDOB: userDoB,
       tblUserGender: userGender,
-      tblUserAdmin: admin == null
-          ? 0
-          : admin == true
-              ? 1
-              : 0,
+      tblUserToken: userToken,
+      tblUserAdmin: admin,
     };
     return map;
   }
@@ -69,6 +69,7 @@ class UserModel {
         branch = doc.data()![tblBranch],
         userDoB = doc.data()![tblUserDOB],
         userGender = doc.data()![tblUserGender],
+        userToken = doc.data()![tblUserToken],
         admin = doc.data()![tblUserAdmin] == 0 ? false : true;
 
   UserModel.fromMap(Map<String, dynamic>? doc)
@@ -81,5 +82,6 @@ class UserModel {
         branch = doc[tblBranch],
         userDoB = doc[tblUserDOB],
         userGender = doc[tblUserGender],
+        userToken = doc[tblUserToken],
         admin = doc[tblUserAdmin] == 0 ? false : true;
 }

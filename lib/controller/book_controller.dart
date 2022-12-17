@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:library_managment_system/database/auth_db.dart';
 import 'package:library_managment_system/database/book_db.dart';
+import 'package:library_managment_system/functions/shared_pref_helper.dart';
 import 'package:library_managment_system/models/UserModel.dart';
 import 'package:library_managment_system/models/issued_book_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -129,8 +130,12 @@ class BookController extends GetxController {
   }
 
   getIssuedBook() {
+    isReload.value = true;
+
     Future<List<IssuedBookModel>> issuedResult = bookDatabase.getIssuedBook();
     print('BookController.getIssuedBook---. ${issuedResult}');
+
+    isReload.value = false;
     return issuedResult;
   }
 
@@ -199,6 +204,10 @@ class BookController extends GetxController {
   }
 
   checkIssuedOrNot(String bookCode, String borrower) async {
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
+
     final result = await bookDatabase.checkIssued(bookCode);
 
     final bookInfo = await bookDatabase.getBookByCode(bookCode);
@@ -206,6 +215,7 @@ class BookController extends GetxController {
     if (bookInfo!.borrower.isEmpty) {
       final userInfo = await authDatabase.getUserInfo(borrower);
       if (userInfo.applied[bookCode] != null) {
+        EasyLoading.dismiss();
         Fluttertoast.showToast(
           msg: 'You have Already Applied!',
           backgroundColor: Color(0xDDDE1B1B),
@@ -230,6 +240,7 @@ class BookController extends GetxController {
         };
         final updateUser = await authDatabase.updateUser(borrower, userData);
 
+        EasyLoading.dismiss();
         Fluttertoast.showToast(
           msg: 'Issuing Request Send',
           backgroundColor: Color(0xDD286053),
@@ -245,10 +256,12 @@ class BookController extends GetxController {
       });
 
       if (isIssued != null) {
+        EasyLoading.dismiss();
         Fluttertoast.showToast(msg: 'You have Already Issued!');
       } else {
         final userInfo = await authDatabase.getUserInfo(borrower);
         if (userInfo.applied[bookCode] != null) {
+          EasyLoading.dismiss();
           Fluttertoast.showToast(
             msg: 'You have Already Applied!',
             backgroundColor: Color(0xDDDE1B1B),
@@ -273,16 +286,52 @@ class BookController extends GetxController {
           };
           final updateUser = await authDatabase.updateUser(borrower, userData);
 
+          EasyLoading.dismiss();
           Fluttertoast.showToast(
             msg: 'Issuing Request Send',
             backgroundColor: Color(0xDD218B21),
           );
         }
-
-        //Fluttertoast.showToast(msg: 'You dont Already Applied!');
       }
     }
 
+    return result;
+  }
+
+  deleteIssue(BuildContext context, String uniqueBookCode, String borrower,
+      String bookCode) async {
+    try {
+      Map issuedBooks = {};
+      Map borrowerList = {};
+
+      final userData =
+          await authDatabase.deleteIssueFromUser(borrower, uniqueBookCode);
+      final bookData =
+          await bookDatabase.deleteIssuedFromBook(bookCode, uniqueBookCode);
+      final issuedBook = await bookDatabase.deleteIssued(uniqueBookCode);
+
+      Navigator.pop(context);
+      Fluttertoast.showToast(
+        msg: 'Issued Books Updated!',
+      );
+
+      return true;
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
+    }
+  }
+
+  getUserApplication() {
+    final result = bookDatabase.getUserApplicationList();
+    print('BookController.getUserApplication----> ${result}');
+    return result;
+  }
+
+  getUserIssued() {
+    final result = bookDatabase.getUserIssuedList();
+    print('BookController.getUserApplication----> ${result}');
     return result;
   }
 
@@ -297,6 +346,7 @@ class BookController extends GetxController {
     int reserve = hired;
     double count = reserve * 100 / total;
     double finalResult = 100 - count;
+
     if (numberFormat.format(finalResult) == '100') {
       return 1.0;
     } else {

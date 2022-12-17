@@ -44,7 +44,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                         horizontal: 15.0, vertical: 10.0),
                     elevation: 26.0,
                     shadowColor: Colors.white,
-                    color: const Color(0Xaab963ff).withOpacity(0.2),
+                    color: Colors.blue[100],
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -127,7 +127,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
+                          horizontal: 20.0, vertical: 20.0),
                       child: Column(
                         children: [
                           Text(
@@ -149,41 +149,79 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                                 borderRadius: BorderRadius.circular(20.0)),
                             elevation: 26.0,
                             shadowColor: Colors.black,
-                            color: const Color(0Xffb963ff).withOpacity(0.3),
+                            color: Colors.blue[200],
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
                                   children: [
                                     const SizedBox(height: 15.0),
                                     Text(
-                                      '• Name      : ',
+                                      '• Name',
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(height: 15.0),
                                     Text(
-                                      '• Branch     : ',
+                                      '• Branch',
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(height: 15.0),
                                     Text(
-                                      '• Roll No      : ',
+                                      '• Roll No',
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15.0),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const SizedBox(height: 15.0),
+                                    Text(
+                                      ' : ',
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15.0),
+                                    Text(
+                                      ' : ',
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15.0),
+                                    Text(
+                                      ' : ',
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -200,7 +238,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -211,7 +249,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -222,7 +260,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),

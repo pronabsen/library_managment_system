@@ -7,16 +7,18 @@ class AdminHomeController extends GetxController {
   final countBook = 0.obs;
   final countIssuedBooks = 0.obs;
   final available = 0.obs;
+  final countApplication = 0.obs;
+  final countIssued = 0.obs;
 
   BookDatabase bookDatabase = BookDatabase();
 
   @override
   onInit() {
+    super.onInit();
     countBooks();
     countIssuedBook();
-
     available.value = countBook.toInt() - countIssuedBooks.toInt();
-
+    countApplicationIssuedList();
     print('AdminHomeController.onInit-- ${available}');
   }
 
@@ -24,8 +26,17 @@ class AdminHomeController extends GetxController {
   onReady() {
     countBooks();
     countIssuedBook();
+    countApplicationIssuedList();
 
     print('AdminHomeController.onInit-- ${available}');
+  }
+
+  countApplicationIssuedList() async {
+    final application = await bookDatabase.countApplication();
+    countApplication.value = application;
+
+    final issued = await bookDatabase.countIssued();
+    countIssued.value = issued;
   }
 
   countBooks() async {

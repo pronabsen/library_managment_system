@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
                       height: 130,
                       width: 130,
                       fit: BoxFit.fitWidth,
-                      image: AssetImage('assets/app_icon.png')),
+                      image: AssetImage('assets/library_icon.png')),
                   Text('Login to Your Account', style: boldTextStyle(size: 24)),
                   const SizedBox(height: 30),
                   TextFormField(
