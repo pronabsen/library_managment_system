@@ -157,7 +157,7 @@ class AuthController extends GetxController {
               authDatabase.addUserInfo(newUser);
               isLoading.value = false;
               SPHelper.saveUserLoggedInSharedPreference(true);
-              SPHelper.saveUserIsAdminSharedPreference(true);
+              SPHelper.saveUserIsAdminSharedPreference(false);
               SPHelper.saveUserNameSharedPreference(regNameCTR.text);
               SPHelper.saveUserEmailSharedPreference(regEmailCTR.text);
               EasyLoading.dismiss();
