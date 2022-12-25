@@ -9,6 +9,7 @@ import 'package:library_managment_system/database/book_db.dart';
 import 'package:library_managment_system/models/UserModel.dart';
 import 'package:library_managment_system/models/application_model.dart';
 import 'package:library_managment_system/models/book_model.dart';
+import 'package:library_managment_system/services/fcm_messaging_services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../utils/app_component.dart';
 import '../../utils/widgets.dart';
@@ -272,8 +273,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                             ),
                           ),
                           bookController.showOtherOption.isTrue
-                              ? showAcceptOption(
-                                  bookCode, user.userEmail, bookName)
+                              ? showAcceptOption( bookCode, user, bookName)
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -323,7 +323,16 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                                           horizontal: 10.0),
                                       // decoration: _boxDecoration2,
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+
+                                          await bookController.deleteApplication(context, bookCode, user.userEmail);
+
+
+                                          FCMServices.sendPushMessage(
+                                              user.userToken, 'Your requested book Rejected!',
+                                              '${user.userName}, Your requested $bookName #$bookCode was rejected! Please try again!');
+
+                                        },
                                         child: Text(
                                           'Reject',
                                           style: GoogleFonts.montserrat(
@@ -347,7 +356,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
         });
   }
 
-  showAcceptOption(String bookCode, String userEmail, String bookName) {
+  showAcceptOption(String bookCode, UserModel userModel, String bookName) {
     return Column(
       children: [
         SizedBox(
@@ -359,7 +368,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
               prefixIcon: Icons.code, hintText: "Enter Unique Code"),
           validator: (val) {
             if (val!.isEmpty) {
-              return "Email cannot be empty";
+              return "Code cannot be empty";
             } else {
               return null;
             }
@@ -383,7 +392,7 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
               prefixIcon: Icons.date_range, hintText: "Enter Date"),
           validator: (val) {
             if (val!.isEmpty) {
-              return "Email cannot be empty";
+              return "Date cannot be empty";
             } else {
               return null;
             }
@@ -401,19 +410,19 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
             DateTime? pickedDate = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
-                firstDate: DateTime(1970),
+                firstDate: DateTime.now(),
                 //DateTime.now() - not to allow to choose before today.
-                lastDate: DateTime.now());
+                lastDate: DateTime(2070));
 
             if (pickedDate != null) {
               print(
                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-              String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(pickedDate);
+              String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
               print(
                   formattedDate); //formatted date output using intl package =>  2021-03-16
 
-              bookController.appDatetext.value = formattedDate;
+              bookController.dueDateText.value = pickedDate;
+              bookController.issueDateText.value = DateTime.now();
               bookController.appDateController.text = formattedDate;
             } else {}
           },
@@ -426,12 +435,9 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  final uniqueCode =
-                      bookController.uniqueBookCodeController.text;
-                  final issuedBookContent =
-                      await bookController.getIssuedBookByCode(uniqueCode);
-                  final bookData =
-                      await bookController.getBookByCode(uniqueCode);
+                  final uniqueCode = bookController.uniqueBookCodeController.text;
+                  final issuedBookContent = await bookController.getIssuedBookByCode(uniqueCode);
+                  final bookData = await bookController.getBookByCode(uniqueCode);
 
                   if (issuedBookContent != null ||
                       bookData != null ||
@@ -442,11 +448,14 @@ class _FragRequestBookListState extends State<FragRequestBookList> {
                     );
                     // print('Enter Unique Code');
                   } else {
-                    bookController.acceptApplication(
-                        bookCode, userEmail, bookName);
+                   await bookController.acceptApplication(bookCode, userModel.userName, userModel.userEmail, bookName);
 
-                    bookController.deleteApplication(
-                        context, bookCode, userEmail);
+
+                    FCMServices.sendPushMessage(
+                        userModel.userToken, 'Your requested book Issued!',
+                        '${userModel.userName}, Your requested $bookName #$bookCode issued for you! \nRef: ${bookController.uniqueBookCodeController.text}');
+
+                   await bookController.deleteApplication(context, bookCode, userModel.userEmail);
 
                     Fluttertoast.showToast(
                       msg: 'Valid Unique Code',

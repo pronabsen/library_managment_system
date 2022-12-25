@@ -1,5 +1,7 @@
 import 'dart:ffi';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:library_managment_system/services/fcm_messaging_services.dart';
 import 'package:library_managment_system/views/login_views.dart';
 import 'package:library_managment_system/views/user_home_views.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -21,6 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    FCMServices.requestPermission();
+    FCMServices.loadFCM();
+    FCMServices.listenFCM();
+    FirebaseMessaging.instance.subscribeToTopic("NextzenFCM");
+
     init();
     getCredential();
   }

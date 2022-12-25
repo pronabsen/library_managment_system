@@ -25,6 +25,9 @@ class AuthController extends GetxController {
   final isLoading = false.obs;
   final isAdmin = false.obs;
 
+  final userBookRequested = 0.obs;
+  final userBookIssued = 0.obs;
+
   //Login
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
@@ -47,33 +50,40 @@ class AuthController extends GetxController {
     );
     isLoading.value = true;
 
-    authService
-        .loginWithEmailAndPassword(
-            emailController.text, passwordController.text)
+    authService.loginWithEmailAndPassword(emailController.text, passwordController.text)
         .then((value) async {
-      if (value != null) {
-        final querySnapshot = await authDatabase.getUserInfo(emailController.text);
-        isAdmin.value = querySnapshot.admin;
-        SPHelper.saveUserLoggedInSharedPreference(true);
-        SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
-        SPHelper.saveUserEmailSharedPreference(querySnapshot.userEmail);
-        SPHelper.saveUserIsAdminSharedPreference(querySnapshot.admin);
-        EasyLoading.dismiss();
-        toast('Welcome Back! ${querySnapshot.userName}');
-        isLoading.value = false;
+          if (value != null) {
+            final querySnapshot = await authDatabase.getUserInfo(emailController.text);
+            isAdmin.value = querySnapshot.admin;
 
-        //   Get.to(Home());
 
-        if (querySnapshot.admin) {
-          Get.offAll(() => const AdminHomeView());
-        } else {
-          Get.offAll(() => const UserHomeView());
-        }
-        _clearController();
-      } else {
-        EasyLoading.dismiss();
-        isLoading.value = false;
-      }
+            SPHelper.saveUserLoggedInSharedPreference(true);
+            SPHelper.saveUserNameSharedPreference(querySnapshot.userName);
+            SPHelper.saveUserEmailSharedPreference(querySnapshot.userEmail);
+            SPHelper.saveUserIsAdminSharedPreference(querySnapshot.admin);
+            EasyLoading.dismiss();
+            toast('Welcome Back! ${querySnapshot.userName}');
+            isLoading.value = false;
+
+            await authService.getToken().then((token) async {
+              final doc = {
+                tblUserToken:token
+              };
+              await authDatabase.updateUser(querySnapshot.userEmail, doc);
+            });
+
+            //   Get.to(Home());
+
+            if (querySnapshot.admin) {
+              Get.offAll(() => const AdminHomeView());
+            } else {
+              Get.offAll(() => const UserHomeView());
+            }
+            _clearController();
+          } else {
+            EasyLoading.dismiss();
+            isLoading.value = false;
+          }
     });
   }
 

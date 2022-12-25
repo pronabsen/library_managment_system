@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:library_managment_system/controller/auth_controller.dart';
 import 'package:library_managment_system/models/issued_book_model.dart';
 import 'package:library_managment_system/models/book_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,6 +9,8 @@ import '../functions/shared_pref_helper.dart';
 import '../models/application_model.dart';
 
 class BookDatabase {
+  AuthController authController = Get.put(AuthController());
+
   final bookCollection = FirebaseFirestore.instance.collection("Books");
   final applicationCollection =
       FirebaseFirestore.instance.collection("Applications");
@@ -78,6 +82,11 @@ class BookDatabase {
     } else {
       return BookModel.fromMap(snapshot.data());
     }
+  }
+
+  Future<bool?> deleteBook(String code) async {
+    await bookCollection.doc(code).delete();
+    return true;
   }
 
   Future<List<IssuedBookModel>> getIssuedBook() async {
@@ -155,8 +164,8 @@ class BookDatabase {
   }
 
   Future<List<ApplicationModel>> getUserApplicationList() async {
-    final user = await SPHelper.getUserEmailSharedPreference();
 
+    final user = await SPHelper.getUserEmailSharedPreference();
     final snapshot =
         await applicationCollection.where('borrower', isEqualTo: user).get();
 
@@ -166,10 +175,37 @@ class BookDatabase {
   }
 
   Future<List<IssuedBookModel>> getUserIssuedList() async {
-    final user = await SPHelper.getUserEmailSharedPreference();
 
+    final user = await SPHelper.getUserEmailSharedPreference();
     final snapshot =
         await issuedBookCollection.where('borrower', isEqualTo: user).get();
+
+    return snapshot.docs
+        .map((e) => IssuedBookModel.fromDocumentSnapshot(e))
+        .toList();
+  }
+
+
+  Future<List<ApplicationModel>> getApplicationListByUser(String userEmail) async {
+
+    authController.userBookRequested.value = 0;
+    final snapshot =
+        await applicationCollection.where('borrower', isEqualTo: userEmail).get();
+
+    authController.userBookRequested.value = snapshot.docs.length;
+
+    return snapshot.docs
+        .map((e) => ApplicationModel.fromDocumentSnapshot(e))
+        .toList();
+  }
+
+  Future<List<IssuedBookModel>> getIssuedListByUser(String userEmail) async {
+
+    authController.userBookIssued.value = 0;
+    final snapshot =
+        await issuedBookCollection.where('borrower', isEqualTo: userEmail).get();
+
+    authController.userBookIssued.value = snapshot.docs.length;
 
     return snapshot.docs
         .map((e) => IssuedBookModel.fromDocumentSnapshot(e))
@@ -204,4 +240,6 @@ class BookDatabase {
 
     return result;
   }
+
+
 }

@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,72 +53,109 @@ class _AdminHomeViewState extends State<AdminHomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: homeAppBar(context),
-        body: SizedBox.expand(
-          child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(()  {
-                  _currentIndex = index;
-                  loadData();
-                });
-              },
-              children: [
-                FragAdminHome(),
-                FragBookList(),
-                const FragRequestBookList(),
-                const FragIssuedBookList(),
-                SettingsPage()
-              ]),
-        ),
-        floatingActionButton: _currentIndex == 4
-            ? Container()
-            : FloatingActionButton(
-                backgroundColor: Colors.blue,
-                elevation: 10,
-                child: const Icon(Icons.add_outlined),
-                onPressed: () {
-                  Get.off(AddBookView());
-                },
-              ),
-        bottomNavigationBar: BottomNavyBar(
-          backgroundColor: Colors.blue,
-          selectedIndex: _currentIndex,
-          showElevation: true, // use this to remove appBar's elevation
-          onItemSelected: (index){
-            setState(() {
-              _currentIndex = index;
-              _pageController.animateToPage(index,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.ease);
+    return WillPopScope(
+      onWillPop: () async {
+
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CupertinoAlertDialog(
+                title: Column(
+                  children: [
+                    Text("Alert!", style: montserratTextStyle(color: Colors.red, fontSize: 20),)
+                  ],
+                ),
+                content: Text('Are you sure want to close app?' , style: montserratTextStyle(fontSize: 17),),
+                actions: [
+                  CupertinoDialogAction(
+                    child: const Text("Yes"),
+                    onPressed: () {
+
+                      if(Platform.isIOS){
+                        exit(0);
+                      }else {
+                        SystemNavigator.pop();
+                      }
+
+                    },),
+                  CupertinoDialogAction(
+                    child: const Text("No"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },),
+                ],
+              );
             });
-          },
-          items: [
-            BottomNavyBarItem(
-              icon: const Icon(Icons.dashboard_outlined),
-              title: const AutoSizeText('Home'),
-              activeColor: Colors.white,
-            ),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.library_books_outlined),
-                title: const AutoSizeText('Books List'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.keyboard_command_key),
-                title: const AutoSizeText('Request List'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.menu_book_outlined),
-                title: const AutoSizeText('Issued Books'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.account_circle_outlined),
-                title: const AutoSizeText('Me'),
-                activeColor: Colors.white),
-          ],
-        ));
+
+        return false; //<-- SEE HERE
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: homeAppBar(context),
+          body: SizedBox.expand(
+            child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(()  {
+                    _currentIndex = index;
+                    loadData();
+                  });
+                },
+                children: [
+                  FragAdminHome(),
+                  FragBookList(),
+                  const FragRequestBookList(),
+                  const FragIssuedBookList(),
+                  SettingsPage()
+                ]),
+          ),
+          floatingActionButton: _currentIndex == 4
+              ? Container()
+              : FloatingActionButton(
+                  backgroundColor: Colors.blue,
+                  elevation: 10,
+                  child: const Icon(Icons.add_outlined),
+                  onPressed: () {
+                    Get.off(AddBookView());
+                  },
+                ),
+          bottomNavigationBar: BottomNavyBar(
+            backgroundColor: Colors.blue,
+            selectedIndex: _currentIndex,
+            showElevation: true, // use this to remove appBar's elevation
+            onItemSelected: (index){
+              setState(() {
+                _currentIndex = index;
+                _pageController.animateToPage(index,
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.ease);
+              });
+            },
+            items: [
+              BottomNavyBarItem(
+                icon: const Icon(Icons.dashboard_outlined),
+                title: const AutoSizeText('Home'),
+                activeColor: Colors.white,
+              ),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.library_books_outlined),
+                  title: const AutoSizeText('Books List'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.keyboard_command_key),
+                  title: const AutoSizeText('Request List'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.menu_book_outlined),
+                  title: const AutoSizeText('Issued Books'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.account_circle_outlined),
+                  title: const AutoSizeText('Me'),
+                  activeColor: Colors.white),
+            ],
+          )),
+    );
   }
 
   loadData() async {

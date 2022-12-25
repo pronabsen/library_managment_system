@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/models/issued_book_model.dart';
+import 'package:library_managment_system/services/fcm_messaging_services.dart';
 
 import '../../controller/auth_controller.dart';
 import '../../controller/book_controller.dart';
@@ -34,7 +38,7 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
         future: callApi,
         builder: (BuildContext context,
             AsyncSnapshot<List<IssuedBookModel>> snapshot) {
-          print('_FragIssuedBookListState.build---> ${snapshot.data}');
+          print('_FragIssuedBookListState.build-  --> ${snapshot.data}');
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             return Container(
               padding: const EdgeInsets.all(5),
@@ -79,9 +83,35 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                             ),
                           ],
                         ),
-                        trailing: const Icon(
-                          Icons.arrow_circle_right_outlined,
-                          color: Color(0Xaa000839),
+                        trailing: GestureDetector(
+                          onTap: () async {
+
+
+                            bookController.isDownloading.value = true;
+
+                            bookController.downloadFile('invoice_${snapshot.data![index].uniqueBookCode}_${snapshot.data![index].bookCode}.pdf').whenComplete((){
+                              bookController.isDownloading.value = false;
+                            });
+
+                            print('FILE: ${snapshot.data![index].pdfUrl}');
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(
+                                CupertinoIcons.download_circle,
+                                color: Color(0Xaa000839),
+                                size: 32,
+                              ),
+                              bookController.isDownloading.isTrue ?
+                              Positioned(
+                                child: CircularProgressIndicator(
+                                  //value: bookController.downloadingProgress.value,
+                                  color: Colors.green,
+                                ),
+                              ) : Positioned(child: SizedBox()),
+                            ],
+                          )
                         ),
                       ),
                     ),
@@ -321,7 +351,7 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                                   ),
                                   const SizedBox(height: 15.0),
                                   Text(
-                                    issuedBookModel.dueDate,
+                                    issuedBookModel.dueDate.toString(),
                                     style: GoogleFonts.montserrat(
                                       textStyle: const TextStyle(
                                         color: Colors.black,
@@ -332,7 +362,7 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                                   ),
                                   const SizedBox(height: 15.0),
                                   Text(
-                                    fineCalculator(issuedBookModel.dueDate)
+                                    fineCalculator(issuedBookModel.dueDate.toString())
                                         .toString(),
                                     style: GoogleFonts.montserrat(
                                       textStyle: const TextStyle(

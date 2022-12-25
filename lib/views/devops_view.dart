@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/views/admin_home_views.dart';
+import 'package:library_managment_system/views/user_home_views.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../functions/shared_pref_helper.dart';
 import '../utils/Constants.dart';
 import '../utils/widgets.dart';
 
@@ -17,7 +19,11 @@ class DeveloperTeamView extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.to(AdminHomeView());
+        if (await SPHelper.getUserIsAdminSharedPreference()) {
+          Get.offAll(const AdminHomeView());
+        } else {
+          Get.offAll(const UserHomeView());
+        }
         return false; //<-- SEE HERE
       },
       child: Scaffold(

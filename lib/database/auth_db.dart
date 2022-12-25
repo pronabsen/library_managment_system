@@ -26,6 +26,11 @@ class AuthDatabase {
     return UserModel.fromMap(snapshot.data());
   }
 
+  Future<UserModel> getAdmin() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await userCollection.where(tblUserAdmin, isEqualTo: true).get();
+    return snapshot.docs.map((e) => UserModel.fromDocumentSnapshot(e)).first;
+  }
+
   Future getUserInfoForProfile(String email) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await userCollection.doc(email).get();

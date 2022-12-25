@@ -22,92 +22,98 @@ class RegistrationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      // appBar: careaAppBarWidget(context),
-      body: Obx(() {
-        return Center(
-          child: SingleChildScrollView(
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: formRegKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // const Image(height: 110, width: 110, fit: BoxFit.cover, image: AssetImage('assets/app_icon.png'),),
-                    const SizedBox(height: 16),
-                    Text('Create Your Account', style: boldTextStyle(size: 24)),
-                    const SizedBox(height: 40),
-                    _profilePic(context),
-                    const SizedBox(height: 40),
-                    _name(context),
-                    const SizedBox(height: 20),
-                    _email(context),
-                    const SizedBox(height: 20),
-                    _rollNo(context),
-                    const SizedBox(height: 20),
-                    _dateOfBirth(context),
-                    const SizedBox(height: 20),
-                    _branch(context),
-                    const SizedBox(height: 20),
-                    _gender(context),
-                    const SizedBox(height: 20),
-                    _password(context),
-                    const SizedBox(height: 30),
-                    GestureDetector(
-                      onTap: () async {
-                        if (formRegKey.currentState!.validate()) {
-                          await authController.registerCTR();
-                        } else {
-                          print("Not Validated");
-                        }
-                      },
-                      child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        alignment: Alignment.center,
-                        decoration: boxDecorationWithRoundedCorners(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(45)),
-                          backgroundColor: appSecBackGroundColor,
-                        ),
-                        child:
-                        Text('Sign Up', style: boldTextStyle(color: white)),
-                      ),
-                    ),
-                    //Divider
-
-                    const SizedBox(height: 15),
-                    TextButton(
-                      onPressed: () {
-                        Get.to(LoginView());
-
-                        // Get.to(const LoginWithPassScreen());
-                      },
-                      child: Text.rich(
-                        TextSpan(
-                          text: "Already have account? ",
-                          style: secondaryTextStyle(),
-                          children: [
-                            TextSpan(
-                                text: ' Sign in', style: primaryTextStyle()),
-                          ],
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAll( LoginView());
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        // appBar: careaAppBarWidget(context),
+        body: Obx(() {
+          return Center(
+            child: SingleChildScrollView(
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16),
+                child: Form(
+                  key: formRegKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // const Image(height: 110, width: 110, fit: BoxFit.cover, image: AssetImage('assets/app_icon.png'),),
+                      const SizedBox(height: 16),
+                      Text('Create Your Account', style: boldTextStyle(size: 24)),
+                      const SizedBox(height: 40),
+                      _profilePic(context),
+                      const SizedBox(height: 40),
+                      _name(context),
+                      const SizedBox(height: 20),
+                      _email(context),
+                      const SizedBox(height: 20),
+                      _rollNo(context),
+                      const SizedBox(height: 20),
+                      _dateOfBirth(context),
+                      const SizedBox(height: 20),
+                      _branch(context),
+                      const SizedBox(height: 20),
+                      _gender(context),
+                      const SizedBox(height: 20),
+                      _password(context),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: () async {
+                          if (formRegKey.currentState!.validate()) {
+                            await authController.registerCTR();
+                          } else {
+                            print("Not Validated");
+                          }
+                        },
+                        child: Container(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          alignment: Alignment.center,
+                          decoration: boxDecorationWithRoundedCorners(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(45)),
+                            backgroundColor: appSecBackGroundColor,
+                          ),
+                          child:
+                          Text('Sign Up', style: boldTextStyle(color: white)),
                         ),
                       ),
-                    ),
-                  ],
+                      //Divider
+
+                      const SizedBox(height: 15),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(LoginView());
+
+                          // Get.to(const LoginWithPassScreen());
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                            text: "Already have account? ",
+                            style: secondaryTextStyle(),
+                            children: [
+                              TextSpan(
+                                  text: ' Sign in', style: primaryTextStyle()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 

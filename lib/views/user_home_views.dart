@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,58 +50,93 @@ class _UserHomeViewState extends State<UserHomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: homeAppBar(context),
-        body: SizedBox.expand(
-          child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() => _currentIndex = index);
-              },
-              children: [
-                Container(
-                  child: UserApplication(),
+    return WillPopScope(
+      onWillPop: () async {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CupertinoAlertDialog(
+                title: Column(
+                  children: [
+                    Text("Alert!", style: montserratTextStyle(color: Colors.red, fontSize: 20),)
+                  ],
                 ),
-                Container(
-                  child: UserIssued(),
-                ),
-                Container(
-                  child: FragBookList(),
-                ),
-                Container(
-                  child: SettingsPage(),
-                )
-              ]),
-        ),
-        bottomNavigationBar: BottomNavyBar(
-          backgroundColor: Colors.blue,
-          selectedIndex: _currentIndex,
-          showElevation: true, // use this to remove appBar's elevation
-          onItemSelected: (index) => setState(() {
-            _currentIndex = index;
-            _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.ease);
-          }),
-          items: [
-            BottomNavyBarItem(
-                icon: const Icon(Icons.library_add_outlined),
-                title: const AutoSizeText('Application'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.library_add_check_outlined),
-                title: const AutoSizeText('Issued Book'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.library_books_outlined),
-                title: const AutoSizeText('Books List'),
-                activeColor: Colors.white),
-            BottomNavyBarItem(
-                icon: const Icon(Icons.account_circle_outlined),
-                title: const AutoSizeText('Me'),
-                activeColor: Colors.white),
-          ],
-        ));
+                content: Text('Are you sure want to close app?' , style: montserratTextStyle(fontSize: 17),),
+                actions: [
+                  CupertinoDialogAction(
+                    child: const Text("Yes"),
+                    onPressed: () {
+
+                      if(Platform.isIOS){
+                        exit(0);
+                      }else {
+                        SystemNavigator.pop();
+                      }
+
+                    },),
+                  CupertinoDialogAction(
+                    child: const Text("No"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },),
+                ],
+              );
+            });
+        return false; //<-- SEE HERE
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: homeAppBar(context),
+          body: SizedBox.expand(
+            child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() => _currentIndex = index);
+                },
+                children: [
+                  Container(
+                    child: UserApplication(),
+                  ),
+                  Container(
+                    child: UserIssued(),
+                  ),
+                  Container(
+                    child: FragBookList(),
+                  ),
+                  Container(
+                    child: SettingsPage(),
+                  )
+                ]),
+          ),
+          bottomNavigationBar: BottomNavyBar(
+            backgroundColor: Colors.blue,
+            selectedIndex: _currentIndex,
+            showElevation: true, // use this to remove appBar's elevation
+            onItemSelected: (index) => setState(() {
+              _currentIndex = index;
+              _pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.ease);
+            }),
+            items: [
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.library_add_outlined),
+                  title: const AutoSizeText('Application'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.library_add_check_outlined),
+                  title: const AutoSizeText('Issued Book'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.library_books_outlined),
+                  title: const AutoSizeText('Books List'),
+                  activeColor: Colors.white),
+              BottomNavyBarItem(
+                  icon: const Icon(Icons.account_circle_outlined),
+                  title: const AutoSizeText('Me'),
+                  activeColor: Colors.white),
+            ],
+          )),
+    );
   }
 }

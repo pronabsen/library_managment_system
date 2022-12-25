@@ -12,6 +12,7 @@ const String tblBookItem = 'book_item';
 const String tblBookHired = 'book_hired';
 const String tblBookDescription = 'descriptions';
 const String tblBookBorrower = 'borrower';
+const String tblBookImages = 'bookImages';
 
 class BookModel {
   final String bookCode;
@@ -22,11 +23,11 @@ class BookModel {
   final String publication;
   final String publishedDate;
   final String language;
-  final String bookImage;
   final String bookDescription;
   final int bookItem;
   final int bookHired;
   Map borrower = {};
+  List bookImages = [];
 
   BookModel(
       {required this.bookCode,
@@ -36,11 +37,11 @@ class BookModel {
       required this.publication,
       required this.publishedDate,
       required this.language,
-      required this.bookImage,
       required this.bookDescription,
       required this.bookItem,
       this.bookHired = 0,
-      required this.borrower});
+      required this.borrower,
+      required this.bookImages});
 
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
@@ -51,11 +52,11 @@ class BookModel {
       tblBookPublications: publication,
       tblBookPublishedDate: publishedDate,
       tblBookLanguage: language,
-      tblBookImage: bookImage,
       tblBookItem: bookItem,
       tblBookHired: bookHired,
       tblBookDescription: bookDescription,
       tblBookBorrower: borrower,
+      tblBookImages: bookImages,
     };
     return map;
   }
@@ -68,10 +69,10 @@ class BookModel {
         publication = doc.data()![tblBookPublications],
         publishedDate = doc.data()![tblBookPublishedDate],
         language = doc.data()![tblBookLanguage],
-        bookImage = doc.data()![tblBookImage],
         bookItem = doc.data()![tblBookItem],
         bookHired = doc.data()![tblBookHired],
         bookDescription = doc.data()![tblBookDescription],
+        bookImages = doc.data()![tblBookImages],
         borrower = doc.data()![tblBookBorrower];
 
   BookModel.fromMap(Map<String, dynamic>? doc)
@@ -82,9 +83,9 @@ class BookModel {
         publication = doc[tblBookPublications],
         publishedDate = doc[tblBookPublishedDate],
         language = doc[tblBookLanguage],
-        bookImage = doc[tblBookImage],
         bookItem = doc[tblBookItem],
         bookHired = doc[tblBookHired],
         bookDescription = doc[tblBookDescription],
+        bookImages = doc[tblBookImages],
         borrower = doc[tblBookBorrower];
 }

@@ -19,7 +19,7 @@ class AdminHomeController extends GetxController {
     countIssuedBook();
     available.value = countBook.toInt() - countIssuedBooks.toInt();
     countApplicationIssuedList();
-    print('AdminHomeController.onInit-- ${available}');
+    print('AdminHomeController.available-- ${available}');
   }
 
   @override
@@ -59,7 +59,7 @@ class AdminHomeController extends GetxController {
   countIssuedBook() async {
     try {
       QuerySnapshot _myDoc =
-          await FirebaseFirestore.instance.collection('issued books').get();
+          await FirebaseFirestore.instance.collection('IssuedBooks').get();
       List<DocumentSnapshot> _myDocCount = _myDoc.docs;
 
       countIssuedBooks.value = _myDocCount.length;

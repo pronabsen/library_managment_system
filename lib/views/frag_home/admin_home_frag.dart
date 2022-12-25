@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/controller/auth_controller.dart';
 import 'package:library_managment_system/models/UserModel.dart';
+import 'package:library_managment_system/views/profile_views.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../controller/admin_home_controller.dart';
@@ -408,59 +409,59 @@ class FragAdminHome extends StatelessWidget {
                         future: authController.getUserList(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<UserModel>> snapshot) {
-                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return Container(
-                              height: 110,
-                              margin: const EdgeInsets.only(
-                                  left: 10.0, top: 3.0, right: 5.0),
-                              child: ListView.builder(
-                                // shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Expanded(
-                                    child: Container(
-                                        padding: const EdgeInsets.all(5),
-                                        width: 90,
-                                        child: ListView(
-                                          children: [
-                                            SizedBox(
-                                              width: 80,
-                                              height: 80,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xFF90CAF9),
-                                                      width: 3),
-                                                  image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: NetworkImage(
-                                                          snapshot.data![index]
-                                                                  .userImage ??
-                                                              '')),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                  );
-                                },
-                              ),
-                            );
-                          } else if (snapshot.connectionState ==
+                          if (snapshot.connectionState ==
                                   ConnectionState.done &&
                               snapshot.data!.isEmpty) {
                             return Center(
                               child: ListView(
                                 shrinkWrap: true,
-                                children: [
+                                children: const [
                                   Align(
                                       alignment: AlignmentDirectional.center,
-                                      child: noAvailableData()),
+                                      child: CircularProgressIndicator()),
                                 ],
+                              ),
+                            );
+                          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return Container(
+                              height: 110,
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, top: 3.0, right: 5.0),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: (){
+
+                                      Get.off(() =>  ProfileView(userModel : snapshot.data![index]));
+                                     // Fluttertoast.showToast(msg: 'Coming in next Build!', backgroundColor: Colors.orangeAccent);
+                                    },
+                                    child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: 90,
+                                        child: SizedBox(
+                                          width: 80,
+                                          height: 80,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: const Color(
+                                                      0xFF90CAF9),
+                                                  width: 3),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(
+                                                      snapshot.data![index].userImage ??
+                                                          '')),
+                                            ),
+                                          ),
+                                        )),
+                                  );
+                                },
                               ),
                             );
                           } else {

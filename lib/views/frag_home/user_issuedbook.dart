@@ -316,7 +316,7 @@ class _UserIssuedState extends State<UserIssued> {
                                   ),
                                   const SizedBox(height: 15.0),
                                   Text(
-                                    issuedBookModel.dueDate,
+                                    issuedBookModel.dueDate.toString(),
                                     style: GoogleFonts.montserrat(
                                       textStyle: const TextStyle(
                                         color: Colors.black,
@@ -327,7 +327,7 @@ class _UserIssuedState extends State<UserIssued> {
                                   ),
                                   const SizedBox(height: 15.0),
                                   Text(
-                                    fineCalculator(issuedBookModel.dueDate)
+                                    fineCalculator(issuedBookModel.dueDate.toString())
                                         .toString(),
                                     style: GoogleFonts.montserrat(
                                       textStyle: const TextStyle(

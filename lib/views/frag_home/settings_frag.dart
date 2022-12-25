@@ -11,6 +11,7 @@ import 'package:library_managment_system/views/about_view.dart';
 import 'package:library_managment_system/views/faqs_view.dart';
 
 import '../devops_view.dart';
+import '../profile_views.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
@@ -76,18 +77,16 @@ class SettingsPage extends StatelessWidget {
                 title: "General",
                 children: [
                   ListTile(
-                    title: const Text('Edit Profile'),
-                    leading: const Icon(Icons.edit_location_outlined),
+                    title: const Text('View Profile'),
+                    leading: const Icon(Icons.remove_red_eye_outlined),
                     trailing: const Icon(CupertinoIcons.forward, size: 18),
                     onTap: () {
-                      Fluttertoast.showToast(
-                          msg: 'Coming in Next update!',
-                          backgroundColor: Colors.deepOrange);
+                      Get.offAll(() => ProfileView(userModel: profileSettingsController.userModel!,));
                     },
                   ),
                   ListTile(
-                    title: const Text('Notifications'),
-                    leading: const Icon(CupertinoIcons.bell_circle),
+                    title: const Text('Edit Profile'),
+                    leading: const Icon(Icons.edit_location_outlined),
                     trailing: const Icon(CupertinoIcons.forward, size: 18),
                     onTap: () {
                       Fluttertoast.showToast(

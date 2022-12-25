@@ -226,9 +226,9 @@ PreferredSizeWidget customAppBarWidget(BuildContext context,
       onPressed: () async {
         print('customAppBarWidget---. ${AuthController().isAdmin}');
         if (await SPHelper.getUserIsAdminSharedPreference()) {
-          Get.offAll(const AdminHomeView());
+          Get.offAll(() => const AdminHomeView());
         } else {
-          Get.off(const UserHomeView());
+          Get.offAll(() => const UserHomeView());
         }
 
         // Home().launch(context, isNewTask: true);

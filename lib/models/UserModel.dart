@@ -70,7 +70,7 @@ class UserModel {
         userDoB = doc.data()![tblUserDOB],
         userGender = doc.data()![tblUserGender],
         userToken = doc.data()![tblUserToken],
-        admin = doc.data()![tblUserAdmin] == 0 ? false : true;
+        admin = doc.data()![tblUserAdmin];
 
   UserModel.fromMap(Map<String, dynamic>? doc)
       : userName = doc![tblUserName],
@@ -83,5 +83,6 @@ class UserModel {
         userDoB = doc[tblUserDOB],
         userGender = doc[tblUserGender],
         userToken = doc[tblUserToken],
-        admin = doc[tblUserAdmin] == 0 ? false : true;
+        admin = doc[tblUserAdmin];
+
 }

@@ -62,7 +62,7 @@ class FragBookList extends StatelessWidget {
                                 image: DecorationImage(
                                     fit: BoxFit.fitWidth,
                                     image: NetworkImage(
-                                        snapshot.data![index].bookImage)),
+                                        snapshot.data![index].bookImages[0]['url'])),
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(10.0),
                                     topRight: Radius.circular(10.0)),
