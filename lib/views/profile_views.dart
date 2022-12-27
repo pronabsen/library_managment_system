@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_managment_system/controller/auth_controller.dart';
@@ -12,16 +14,13 @@ import 'package:library_managment_system/views/user_home_views.dart';
 import '../models/issued_book_model.dart';
 import 'admin_home_views.dart';
 
+
 class ProfileView extends StatelessWidget {
 
   UserModel userModel;
-
   ProfileView({super.key, required this.userModel});
-
-
   BookController bookController = Get.put(BookController());
   AuthController authController = Get.put(AuthController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +35,26 @@ class ProfileView extends StatelessWidget {
       },
       child: Scaffold(
         appBar: customAppBarWidget(
-          context, backgroundColor: Colors.indigo.shade500,),
+          context, backgroundColor: Colors.blue.shade500,
+          actionWidget: GestureDetector(
+            onTap: (){
+              Fluttertoast.showToast(msg: 'Coming in next build', backgroundColor: Colors.orange);
+            },
+            child: Row(
+              children: const [
+                Icon(Icons.edit_note_rounded, color: Colors.white, size: 26,),
+                SizedBox(width: 8,)
+              ],
+            ),
+          )
+
+        ),
         body: Stack(
           children: <Widget>[
             Container(
               height: 160.0,
               decoration: BoxDecoration(
-                color: Colors.indigo.shade500,
+                color: Colors.blue.shade500,
               ),
             ),
             ListView(
@@ -52,7 +64,7 @@ class ProfileView extends StatelessWidget {
                 _buildApplicationsRow(),
                 Container(
                     color: Colors.white,
-                    padding: EdgeInsets.only(left: 20.0, top: 20.0, bottom: 10.0),
+                    padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 10.0),
                     child: Text("Issued Books",
                         style: Theme
                             .of(context)
@@ -69,12 +81,12 @@ class ProfileView extends StatelessWidget {
 
   Container _buildHeader(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
-      height: 240.0,
+      margin: const EdgeInsets.only(top: 20.0),
+      height: 300.0,
       child: Stack(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
                 top: 40.0, left: 40.0, right: 40.0, bottom: 10.0),
             child: Material(
               shape: RoundedRectangleBorder(
@@ -83,7 +95,7 @@ class ProfileView extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 50.0,
                   ),
                   Text(
@@ -91,15 +103,50 @@ class ProfileView extends StatelessWidget {
                     style: montserratTextStyle(
                         fontSize: 20, color: Colors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
                   Text(
                     userModel.userEmail, style: montserratTextStyle(),),
-                  SizedBox(
-                    height: 20.0,
+                  const SizedBox(
+                    height: 15.0,
                   ),
-                  Container(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(CupertinoIcons.building_2_fill, size: 16,),
+                      const SizedBox(width: 5,),
+                      Text(userModel.branch, style: montserratTextStyle(),),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(CupertinoIcons.person_2, size: 16,),
+                      const SizedBox(width: 5,),
+                      Text(userModel.userGender, style: montserratTextStyle(),),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(CupertinoIcons.calendar, size: 16,),
+                      const SizedBox(width: 5,),
+                      Text(userModel.userDoB, style: montserratTextStyle(),),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+
+                  SizedBox(
                     height: 40.0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +195,7 @@ class ProfileView extends StatelessWidget {
             children: <Widget>[
               Material(
                 elevation: 5.0,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 child: CircleAvatar(
                   radius: 40.0,
                   backgroundImage: NetworkImage(userModel.userImage),
@@ -164,8 +211,8 @@ class ProfileView extends StatelessWidget {
   Container _buildSectionHeader(BuildContext context) {
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Text(
         "Pending Applications",
         style: Theme
@@ -180,7 +227,7 @@ class ProfileView extends StatelessWidget {
     return Container(
       color: Colors.white,
       height: 200.0,
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: FutureBuilder(
         future: bookController.getApplicationByUser(userModel.userEmail),
         builder: (BuildContext context,
@@ -247,7 +294,7 @@ class ProfileView extends StatelessWidget {
     return Container(
         color: Colors.white,
         height: 200.0,
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: FutureBuilder(
           future: bookController.getIssuedByUser(userModel.userEmail),
           builder: (BuildContext context,
@@ -283,14 +330,14 @@ class ProfileView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 8,
                               ),
                               Text('Borrower: ${snapshot.data![index]
                                   .borrower}'),
                               Text(
                                   'Due Date: ${snapshot.data![index].dueDate}'),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                             ],

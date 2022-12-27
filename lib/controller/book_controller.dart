@@ -100,6 +100,8 @@ class BookController extends GetxController {
         .ref(AppConstants.firebaseStorageImgPathInvoices)
         .child(fileName);
 
+    print('BookController.downloadFile--> $fileName');
+
     final dir = (await getExternalStorageDirectory())?.path;
     final path = '$dir/$fileName';
     final File tempFile = File(path);
@@ -108,7 +110,8 @@ class BookController extends GetxController {
       await firebasePath.writeToFile(tempFile);
       await tempFile.create();
       await OpenFile.open(tempFile.path);
-    } on FirebaseException {
+    } on FirebaseException catch(e) {
+      print('BookController.downloadFileerror --> ${e.toString()}');
       Fluttertoast.showToast(msg: 'Error!');
     }
 

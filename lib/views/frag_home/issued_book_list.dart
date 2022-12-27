@@ -89,7 +89,7 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
 
                             bookController.isDownloading.value = true;
 
-                            bookController.downloadFile('invoice_${snapshot.data![index].uniqueBookCode}_${snapshot.data![index].bookCode}.pdf').whenComplete((){
+                            bookController.downloadFile('invoice_${snapshot.data![index].uniqueBookCode}_.pdf').whenComplete((){
                               bookController.isDownloading.value = false;
                             });
 
@@ -98,13 +98,13 @@ class _FragIssuedBookListState extends State<FragIssuedBookList> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 CupertinoIcons.download_circle,
                                 color: Color(0Xaa000839),
                                 size: 32,
                               ),
                               bookController.isDownloading.isTrue ?
-                              Positioned(
+                              const Positioned(
                                 child: CircularProgressIndicator(
                                   //value: bookController.downloadingProgress.value,
                                   color: Colors.green,
