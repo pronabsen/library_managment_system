@@ -4,10 +4,7 @@ Star⭐ the repo if you like what you see😉.
 
 ## ✨ Demo available on PlayStore. 
 
-- Login for Admin
- ** pronabsen18@gmail.com
- ** 123456
- 
+- Login for Admin - Mail: pronabsen18@gmail.com | Pass: 123456
 - Create new account for User
 
 [<img src="https://raw.githubusercontent.com/lohanidamodar/flutter_ui_challenges/master/screenshots/play-store-logo.png" width="450" >](https://play.google.com/store/apps/details?id=com.pronab.librarymanagement)
