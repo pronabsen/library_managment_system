@@ -26,8 +26,8 @@ Demo available on PlayStore.
 
 
 ## 🤓 Author(s)
-**Pronab Sen Gupta** [![Facebook Follow](https://img.shields.io/facebook/follow/impronabsen.svg?style=social)](https://facebook.com/impronabsen)
-**Pronab Sen Gupta** [![Instagram Follow](https://img.shields.io/instragram/follow/impronabsen.svg?style=social)](https://instagram.com/impronabsen)
+
+**Pronab Sen Gupta** [![Github Follow](https://img.shields.io/github/followers/pronabsen?label=Pronab%20Sen&style=social)](https://facebook.com/impronabsen)
 **Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 
 ## 📸 ScreenShots
@@ -35,23 +35,7 @@ Demo available on PlayStore.
 <img src="screenshots/cover1.png"/>
 <img src="screenshots/cover2.png"/>
 
-<img height="480px" src="screenshots/splash.jpg">
-<img height="480px" src="screenshots/login.jpg">
-<img height="480px" src="screenshots/registration.jpg">
-<img height="480px" src="screenshots/admin_dash.jpg">
-<img height="480px" src="screenshots/booklist.jpg">
-<img height="480px" src="screenshots/addbook_image.jpg">
-<img height="480px" src="screenshots/bookdeletepop.jpg">
-<img height="480px" src="screenshots/bookdetails.jpg">
-<img height="480px" src="screenshots/adminnotification.jpg">
-<img height="480px" src="screenshots/profile_page.jpg">
-<img height="480px" src="screenshots/user_application.jpg">
-<img height="480px" src="screenshots/user_application_view.jpg">
-<img height="480px" src="screenshots/user_issued.jpg">
-<img height="480px" src="screenshots/user_issued_view.jpg">
-<img height="480px" src="screenshots/user_notification.jpg">
-<img height="480px" src="screenshots/profiledetails.jpg">
-<img height="480px" src="screenshots/faqs.jpg">
+<img height="480px" src="screenshots/splash.jpg"> <img height="480px" src="screenshots/login.jpg"> <img height="480px" src="screenshots/registration.jpg"> <img height="480px" src="screenshots/admin_dash.jpg"> <img height="480px" src="screenshots/booklist.jpg"> <img height="480px" src="screenshots/addbook_image.jpg"> <img height="480px" src="screenshots/bookdeletepop.jpg"> <img height="480px" src="screenshots/bookdetails.jpg"> <img height="480px" src="screenshots/adminnotification.jpg"> <img height="480px" src="screenshots/profile_page.jpg"> <img height="480px" src="screenshots/user_application.jpg"> <img height="480px" src="screenshots/user_application_view.jpg"> <img height="480px" src="screenshots/user_issued.jpg"> <img height="480px" src="screenshots/user_issued_view.jpg"> <img height="480px" src="screenshots/user_notification.jpg"> <img height="480px" src="screenshots/profiledetails.jpg"> <img height="480px" src="screenshots/faqs.jpg">
 
 ## 🔖 LICENCE
 [WTFPL](http://www.wtfpl.net/about/)
