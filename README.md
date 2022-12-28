@@ -1,4 +1,4 @@
-# 🔥🔥 Library Management System [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)  [![Twitter Follow](https://img.shields.io/twitter/follow/iamjideguru.svg?style=social)](https://twitter.com/impronabsen)
+# 🔥🔥 Library Management System [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)  [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 Flutter representation of a Social App Concept i found on Uplabs.
 
 Star⭐ the repo if you like what you see😉.
@@ -23,12 +23,12 @@ Demo available on PlayStore.
 
 ## Packages Used
 
+- 
 
 ## 🤓 Author(s)
 
-**Pronab Sen Gupta** [![Github Follow](https://img.shields.io/github/followers/pronabsen?style=social)](https://facebook.com/impronabsen)
-
-**Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
+- **Pronab Sen Gupta** [![Github Follow](https://img.shields.io/github/followers/pronabsen?style=social)](https://facebook.com/impronabsen)
+- **Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 
 ## 📸 ScreenShots
 
