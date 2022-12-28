@@ -1,13 +1,16 @@
 # 🔥🔥 Library Management System [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)  [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 
-
 Star⭐ the repo if you like what you see😉.
 
-Demo available on PlayStore. 
+## ✨ Demo available on PlayStore. 
+
+- Login for Admin
+ ** pronabsen18@gmail.com
+ ** 123456
+ 
+- Create new account for User
 
 [<img src="https://raw.githubusercontent.com/lohanidamodar/flutter_ui_challenges/master/screenshots/play-store-logo.png" width="450" >](https://play.google.com/store/apps/details?id=com.pronab.librarymanagement)
-
-[![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 
 ## ✨ Requirements
 * Any Operating System (ie. MacOS X, Linux, Windows)
