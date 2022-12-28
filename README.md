@@ -27,7 +27,6 @@ Demo available on PlayStore.
 
 ## 🤓 Author(s)
 
-- **Pronab Sen Gupta** [![Github Follow](https://img.shields.io/github/followers/pronabsen?style=social)](https://facebook.com/impronabsen)
 - **Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
 
 ## 📸 ScreenShots
