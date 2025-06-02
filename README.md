@@ -27,7 +27,7 @@ Star⭐ the repo if you like what you see😉.
 
 ## 🤓 Author(s)
 
-- **Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/impronabsen)
+- **Pronab Sen Gupta** [![Twitter Follow](https://img.shields.io/twitter/follow/impronabsen.svg?style=social)](https://twitter.com/pronabsg)
 
 ## 📸 ScreenShots
 
